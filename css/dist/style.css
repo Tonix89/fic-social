@@ -383,6 +383,7 @@ button, .index-main .login-card-cont .login-card .signup-cont button,
 [type=reset],
 [type=submit] {
   -webkit-appearance: button;
+  appearance: button;
 }
 button:not(:disabled), .index-main .login-card-cont .login-card .signup-cont button:not(:disabled),
 [type=button]:not(:disabled),
@@ -441,6 +442,7 @@ legend + * {
 [type=search] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+  appearance: textfield;
 }
 
 /* rtl:raw:
@@ -462,6 +464,7 @@ legend + * {
 ::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
+  appearance: button;
 }
 
 output {
