@@ -1,0 +1,525 @@
+@use "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/functions";
+
+
+body{
+    @extend .bg-light, .d-flex, .flex-column, .align-items-center;
+}
+
+header{
+    @extend .container-fluid, .p-0;
+}
+
+main{
+    width: variables.$w-90vw;
+    min-height: variables.$h-80vh;
+}
+.index-header{
+    @extend .bg-primary, .d-flex, .justify-content-center, .mb-5;
+
+    & .index-logo-cont{
+        @extend header, .row, .d-flex, .flex-column, .align-items-center;
+
+        & img{
+            @extend .col, .p-2;
+            width: variables.$w-100px;
+        }
+    }
+}
+
+.index-main{
+    @extend .container-fluid, .d-flex, .justify-content-center, .p-0;
+    width: variables.$w-90vw;
+    height: variables.$h-80vh;
+
+    & .login-card-cont{
+        @extend .row, .w-100, .h-75;
+
+        & .login-card{
+            @extend .col, .card, .border-0, .rounded-4, .d-flex, .flex-column, .justify-content-center, .align-items-center, .pt-3, .pb-3;
+            box-shadow: variables.$box-shadow-in-out-gray;
+
+            & form{
+                @extend .d-flex, .flex-column, .mb-3;
+
+                & .form-cont{
+                    @extend .container-fluid, .p-0;
+
+                    & .username-cont{
+                        @extend .row, .align-items-center, .mb-3;
+
+                        & .username-header{
+                            @extend  .col-auto, .m-0;
+
+                            & label{
+                                @extend .form-label, .h6, .fw-bold, .p-1, .m-0;
+                            }
+                        }
+
+                        & .username-input{
+                            @extend .col-auto, .mt-0;
+
+                            & input{
+                                @extend .form-control;
+                            }
+                        }
+
+                    }
+
+                    & .password-cont{
+                        @extend .username-cont;
+
+                        & .password-header{
+                            @extend  .username-header;
+
+                            & label{
+                                @extend label;
+                            }
+                        }
+
+                        & .password-input{
+                            @extend .username-input;
+
+                            & input{
+                                @extend input;
+                            }
+                        }
+                    }
+                }
+
+                & button{
+                    @extend .btn, .btn-primary, .align-self-end, .h6, .fw-bold;
+
+                    & #login-button{
+                        @extend .text-bg-primary, .fw-bold, .nav-link;
+                    }
+                }
+            }
+
+            & .forgot-pw-cont{
+                @extend .d-flex, .align-items-center, .justify-content-between;
+
+                & h5{
+                    @extend .pe-0, .pe-sm-5;
+                }
+
+                & button{
+                    @extend .btn, .btn-primary, .h6;
+
+                    & a{
+                        @extend .text-bg-primary, .fw-bold, .nav-link;
+                    }
+                }
+            }
+
+            & .signup-cont{
+                @extend .forgot-pw-cont;
+
+                & h5{
+                    @extend h5, .me-2;
+                }
+
+                & button{
+                    @extend button;
+
+                    & a{
+                        @extend a;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.header-nav{
+    @extend .navbar, .navbar-expand-lg, .text-bg-primary;
+
+    & .nav-cont{
+        @extend .container-fluid;
+
+        & a{
+            @extend .navbar-brand;
+
+            & .fic-logo{
+                width: variables.$w-100px;
+            }
+        }
+
+        & .search-form-cont{
+            @extend .d-none, .d-md-block;
+
+            & form{
+                @extend .d-flex, .position-relative;
+
+                & input{
+                    @extend .form-control, .pe-5, .me-4, .rounded-4;
+                }
+
+                & button{
+                    @extend .btn, .position-absolute, .end-0, .me-4;
+                    background-color: none;
+                }
+            }
+        }
+
+        & .profile-cont{
+            @extend .d-flex, .flex-column, .align-items-center;
+            width: variables.$w-50px;
+
+            & .profile-menu{
+                @extend .dropdown;
+
+                & button{
+                    @extend .btn, .p-0, .m-0;
+                }
+            }
+        }
+    }
+}
+
+.home-main{
+    @extend .container-fluid, .d-flex, .flex-column, .flex-md-row,  .align-items-center, .align-items-md-start, .p-0, .mt-3, .mb-3, .gap-3, main;
+
+    & .search-cont{
+        @extend .container-fluid, .mb-3, .d-block, .d-md-none, .p-0;
+
+        & .search-form-cont{
+            @extend .d-block, .d-md-none;
+
+            & form{
+                @extend .d-flex, .position-relative;
+
+                & input{
+                    @extend .form-control, .pe-5, .me-4, .rounded-4;
+                    padding-right: variables.$w-5rem;
+                }
+
+                & button{
+                    @extend .btn, .position-absolute, .end-0, .me-4;
+                    background-color: none;
+
+                }
+            }
+        }
+    }
+
+    & .small-screen-contacts-cont{
+        @extend .container-fluid, .d-block, .d-md-none, .p-0;
+
+        & .dropdown-buttons-group-cont{
+            @extend .container-fluid, .btn-group, .border, .border-dark, .d-flex, .justify-content-between, .align-items-center, .mb-3, .d-md-none;
+
+            & .profile-button-cont{
+                @extend .col-11;
+
+                & button{
+                    @extend .btn, .btn-light;
+
+                    & .profile-img-cont{
+                        @extend .d-flex, .justify-content-between, .align-items-center;
+
+                        & .profile-header-cont{
+                            @extend .ps-3;
+
+                            & h5{
+                                @extend .m-0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .dropdown-button-cont{
+                @extend .col-1;
+
+                & button{
+                    @extend .btn, .btn-light, .dropdown-toggle, .dropdown-toggle-split, .align-items-end;
+
+                }
+
+                & ul{
+                    inset: variables.$dropdown-custom-inset!important;
+
+                    & li{
+                        @extend .p-1;
+
+                        & .contact-profile-cont{
+                            @extend .d-flex, .align-items-center, .ps-2;
+    
+                            & .profile-header-cont{
+                                @extend .ps-3;
+    
+                                & h5{
+                                    @extend .m-0;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    & .create-post-cont{
+        @extend .container-fluid, .mb-3, .p-0;
+
+        & form{
+            @extend .p-0, .d-flex, .flex-column;
+
+            & div{
+                @extend .mb-3;
+
+                & textarea {
+                    @extend .form-control;
+                }
+            }
+
+            & button{
+                @extend .btn, .btn-primary, .align-self-end;
+            }
+        }
+    }
+
+    & .latest-post-cont{
+        @extend .create-post-cont;
+
+        & .user-post-cont{
+            @extend .mb-3;
+
+            & .post-card{
+                @extend .card, .mb-3;
+
+                & .post-card-header{
+                    @extend .card-header;
+
+                    & .user-cont{
+                        @extend .d-flex, .align-items-center;
+
+                        & .user-header-cont{
+                            @extend .ps-3;
+
+                            & h5{
+                                @extend .m-0;
+                            }
+                        }
+                    }
+                }
+
+                & .post-card-body{
+                    @extend .card-body, .d-flex, .flex-column;
+
+                    & .post-text{
+                        @extend .card-text;
+                    }
+
+                    & .post-buttons{
+                        @extend .d-flex, .align-self-end;
+
+                        & div{
+                            @extend .btn;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & .big-screen-contacts-cont{
+        @extend .container-fluid, .d-none, .d-md-block;
+
+        & .contacts-cont{
+            @extend .border, .border-dark, .rounded-2;
+
+            & .contact-profile-cont{
+                @extend .d-flex, .align-items-center, .p-2;
+
+                & .contact-header-cont{
+                    @extend .ps-3;
+
+                    & h5{
+                        @extend .m-0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.profile-main{
+    @extend .home-main;
+
+    & .profile-card-cont{
+        @extend .container-fluid, .p-0;
+
+        & .card-cont{
+            @extend .card, .text-center;
+
+            & .profile-card-header{
+                @extend .card-header;
+    
+                & ul{
+                    @extend .nav, .nav-tabs, .card-header-tabs;
+    
+                    & .profile-button{
+                        @extend .nav-item;
+    
+                        & button{
+                            @extend .nav-link;
+                        }
+                    }
+
+                    & .contact-button{
+                        @extend .nav-item, .d-block, .d-md-none;
+
+                        & button{
+                            @extend .nav-link;
+                        }
+                    }
+                }
+            }
+
+            & .profile-card-body{
+                @extend .card-body, .flex-column, .align-items-center, .justify-content-between, .gap-5;
+
+                & .profile-text{
+                    @extend .align-self-start, .d-flex, .flex-column, .align-items-start;
+                }
+
+                & button{
+                    @extend .btn, .btn-light;
+                }
+            }
+
+            & .contact-card-body{
+                @extend .card-body;
+
+                & .contact-profile-cont{
+                    @extend .d-flex, .align-items-center, .p-2;
+
+                    & .profile-header-cont{
+                        @extend .ps-3;
+    
+                        & h5{
+                            @extend .m-0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & .create-post-sm-cont{
+        @extend .container-fluid, .mb-3, .d-block, .d-md-none;
+
+        & form{
+            @extend .p-0, .d-flex, .flex-column;
+
+            & textarea{
+                @extend .form-control, .mb-3;
+            }
+
+            & button{
+                @extend .btn, .btn-primary, .align-self-end;
+            }
+        }
+    }
+
+    & .profile-post-cont{
+        @extend .container-fluid;
+
+        & .create-post-lg-cont{
+            @extend .profile-post-cont, .mb-3, .d-none, .d-md-block;
+
+            & form{
+                @extend .p-0, .d-flex, .flex-column;
+    
+                & textarea{
+                    @extend .form-control, .mb-3;
+                }
+    
+                & button{
+                    @extend .btn, .btn-primary, .align-self-end;
+                }
+            }
+        }
+        & .user-post-cont{
+            @extend .mb-3;
+
+            & .post-card{
+                @extend .card, .mb-3;
+
+                & .post-card-header{
+                    @extend .card-header;
+
+                    & .user-cont{
+                        @extend .d-flex, .align-items-center;
+
+                        & .user-header-cont{
+                            @extend .ps-3;
+
+                            & h5{
+                                @extend .m-0;
+                            }
+                        }
+                    }
+                }
+
+                & .post-card-body{
+                    @extend .card-body, .d-flex, .flex-column;
+
+                    & .post-text{
+                        @extend .card-text;
+                    }
+
+                    & .post-buttons{
+                        @extend .d-flex, .align-self-end;
+
+                        & div{
+                            @extend .btn;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    & .big-screen-contacts-cont{
+        @extend .container-fluid, .d-none, .d-md-block;
+
+        & .contacts-cont{
+            @extend .border, .border-dark, .rounded-2;
+
+            & .contact-profile-cont{
+                @extend .d-flex, .align-items-center, .p-2;
+
+                & .contact-header-cont{
+                    @extend .ps-3;
+
+                    & h5{
+                        @extend .m-0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@include media-breakpoint-up(lg) {
+    .index-main .login-card-cont{
+        width: variables.$w-50;
+    }
+}
+
+
+@include media-breakpoint-down(md) {
+    .fic-logo{
+        width: variables.$w-50px;
+    }
+    .header-nav .nav-cont .profile-cont{
+        width: variables.$w-30px;
+    }
+}
+
