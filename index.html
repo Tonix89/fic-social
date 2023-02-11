@@ -18,15 +18,19 @@
     </header>
     <main class="index-main">
         <div class="login-card-cont">
-            <div class="login-card">
-                <form>
-                    <div class="form-cont">
-                        <div class="username-cont">
-                            <div class="username-header">
-                                <label for="email">Username : </label>
+            <div class="login-card d-flex" id="login-card">
+                <form class="login-form">
+                    <div class="formError" id="loginError">
+                    </div>                    <div class="form-cont">
+                        <div class="email-cont">
+                            <div class="email-header">
+                                <label for="email">Email : &nbsp &nbsp  &nbsp &nbsp</label>
                             </div>
-                            <div class="username-input">
-                                <input type="email" id="email" aria-describedby="emailHelp" placeholder="example@user.com">
+                            <div class="email-input">
+                                <input type="email" id="email" aria-describedby="emailHelp" placeholder="example@noroff.com">
+                                <div class="formError d-none" id="emailError">
+                                    Please use a registered email.
+                                </div>
                             </div>
                         </div>
                         <div class="password-cont">
@@ -34,21 +38,75 @@
                               <label for="password">Password &nbsp: </label>
                             </div>
                             <div class="password-input">
-                              <input type="password" id="password" aria-describedby="passwordHelpInline" placeholder="1234" >
+                              <input type="password" id="password" >
+                              <div class="showPw">
+                                <input type="checkbox" id="showPw">
+                                <label for="showPw">Show Password</label>
+                              </div>
+                              <div class="formError d-none" id="passwordError">
+                                Password input must not be empty.
+                              </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit"><a id="login-button">Login</a></button>
+                    <button id="login-button">Login</button>
                 </form>
                 <div class="forgot-pw-cont">
                     <h5>Forgot password? &nbsp</h5>
-                    <button type="button"><a href="#">Click Here</a></button>
+                    <button type="button">Click Here</button>
                 </div>
                 <div class="signup-cont">
                     <h5>No account yet?</h5>
-                    <button type="button" ><a href="#">Sign Up</a></button>
+                    <button type="button" class="gotoSignUp">Sign Up</button>
                 </div>
-                </div>
+            </div>
+            <div class="signup-card d-none" id="signup-card">
+                <form class="signup-form">
+                    <div class="form-cont">
+                        <div class="formError" id="signupError">
+                        </div>
+                        <div class="username2-cont">
+                            <div class="username2-header">
+                                <label for="username2">Username :</label>
+                            </div>
+                            <div class="username2-input">
+                                <input type="text" id="username2">
+                                <div class="formError d-none" id="username2Error">
+                                    Username must be atleast 5 characters.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="email2-cont">
+                            <div class="email2-header">
+                                <label for="email2">Email : &nbsp &nbsp &nbsp &nbsp </label>
+                            </div>
+                            <div class="email2-input">
+                                <input type="email" id="email2" aria-describedby="emailHelp" >
+                                <div id="emailHelp" class="form-text">You must use your Noroff email address.</div>
+                                <div class="formError d-none" id="email2Error">
+                                    This is not a Noroff email address.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="password2-cont">
+                            <div class="password2-header">
+                              <label for="password2">Password &nbsp: </label>
+                            </div>
+                            <div class="password2-input">
+                              <input type="password" id="password2">
+                              <div class="showPw">
+                                <input type="checkbox" id="showPw2">
+    <label for="showPw2">Show Password</label>
+                              </div>
+                              <div class="formError d-none" id="password2Error">
+                                Password must be at least 8 characters.
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="signup-button">Sign Up</button>
+                </form>
+            </div>
         </div>
     </main>
     <footer>
@@ -56,6 +114,6 @@
             <p>All Rights Reserved.</p>
         </div>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" type="module"></script>
 </body>
 </html>

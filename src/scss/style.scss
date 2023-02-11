@@ -15,6 +15,12 @@ main{
     width: variables.$w-90vw;
     min-height: variables.$h-80vh;
 }
+
+.formError{
+    @extend .text-danger, .text-center;
+}
+
+//------------- Index Page --------------//
 .index-header{
     @extend .bg-primary, .d-flex, .justify-content-center, .mb-5;
 
@@ -37,19 +43,19 @@ main{
         @extend .row, .w-100, .h-75;
 
         & .login-card{
-            @extend .col, .card, .border-0, .rounded-4, .d-flex, .flex-column, .justify-content-center, .align-items-center, .pt-3, .pb-3;
+            @extend .col, .card, .border-0, .rounded-4, .flex-column, .justify-content-center, .align-items-center, .pt-3, .pb-3;
             box-shadow: variables.$box-shadow-in-out-gray;
 
-            & form{
+            & .login-form{
                 @extend .d-flex, .flex-column, .mb-3;
 
                 & .form-cont{
                     @extend .container-fluid, .p-0;
 
-                    & .username-cont{
+                    & .email-cont{
                         @extend .row, .align-items-center, .mb-3;
 
-                        & .username-header{
+                        & .email-header{
                             @extend  .col-auto, .m-0;
 
                             & label{
@@ -57,21 +63,21 @@ main{
                             }
                         }
 
-                        & .username-input{
-                            @extend .col-auto, .mt-0;
+                        & .email-input{
+                            @extend .col, .mt-0;
 
                             & input{
-                                @extend .form-control;
+                                @extend .form-control, .mw-100;
                             }
                         }
 
                     }
 
                     & .password-cont{
-                        @extend .username-cont;
+                        @extend .email-cont;
 
                         & .password-header{
-                            @extend  .username-header;
+                            @extend  .email-header;
 
                             & label{
                                 @extend label;
@@ -79,10 +85,21 @@ main{
                         }
 
                         & .password-input{
-                            @extend .username-input;
+                            @extend .email-input;
 
                             & input{
                                 @extend input;
+                            }
+                            & .showPw{
+                                @extend .d-flex, .gap-1;
+    
+                                & input{
+                                    @extend .form-check-input, .p-0;
+                                }
+    
+                                & label{
+                                    @extend .form-check-label;
+                                }
                             }
                         }
                     }
@@ -126,6 +143,95 @@ main{
                     & a{
                         @extend a;
                     }
+                }
+            }
+        }
+
+        & .signup-card{
+            @extend .login-card;
+
+            & .signup-form{
+                @extend .d-flex, .flex-column, .mb-3;
+
+                & .form-cont{
+                    @extend .container-fluid, .p-0;
+
+                    & .username2-cont{
+                        @extend .row,.align-items-start, .align-items-sm-center, .mb-3, .d-flex, .flex-column, .flex-sm-row;
+
+                        & .username2-header{
+                            @extend  .col-auto, .m-0;
+
+                            & label{
+                                @extend .form-label, .h6, .fw-bold, .p-1, .m-0;
+                            }
+                        }
+
+                        & .username2-input{
+                            @extend .col, .mt-0;
+
+                            & input{
+                                @extend .form-control, .mw-100;
+                            }
+                        }
+
+                    }
+
+                    & .email2-cont{
+                        @extend .username2-cont;
+
+                        & .email2-header{
+                            @extend  .username2-header;
+
+                            & label{
+                                @extend .form-label, .h6, .fw-bold, .p-1;
+                            }
+                        }
+
+                        & .email2-input{
+                            @extend .col, .mt-0;
+
+                            & input{
+                                @extend .form-control;
+                            }
+                        }
+
+                    }
+
+                    & .password2-cont{
+                        @extend .username2-cont;
+
+                        & .password2-header{
+                            @extend  .username2-header;
+
+                            & label{
+                                @extend label;
+                            }
+                        }
+
+                        & .password2-input{
+                            @extend .username2-input;
+
+                            & input{
+                                @extend .form-control;
+                            }
+                        }
+                        & .showPw{
+                            @extend .d-flex, .gap-1;
+
+                            & input{
+                                @extend .form-check-input, .p-0;
+                            }
+
+                            & label{
+                                @extend .form-check-label;
+                            }
+                        }
+                    }
+                }
+
+                & button{
+                    @extend .btn, .btn-primary, .align-self-end, .h6, .fw-bold, .text-bg-primary;
                 }
             }
         }
@@ -520,6 +626,15 @@ main{
     }
     .header-nav .nav-cont .profile-cont{
         width: variables.$w-30px;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .password-cont .password-input input{
+        width: 85vw;
+    }
+    .index-main .login-card-cont .login-card .login-form .form-cont .email-cont .email-input input{
+        width: 85vw;
     }
 }
 
