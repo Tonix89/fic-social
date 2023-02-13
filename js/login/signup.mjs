@@ -14,6 +14,12 @@ export function signUp(noroffBaseUrl, e) {
     usernameError.classList.replace("d-none", "d-flex");
   }
 
+  if (validateUsername(userName.value) === true) {
+    usernameError.classList.replace("d-flex", "d-none");
+  } else {
+    usernameError.classList.replace("d-none", "d-flex");
+  }
+
   if (validateEmail(email.value) === true) {
     emailError.classList.replace("d-flex", "d-none");
   } else {
@@ -61,6 +67,11 @@ function validateLength(value, len) {
   } else {
     return false;
   }
+}
+function validateUsername(userName) {
+  const regEx = /^[a-zåøæA-ZÅØÆÑ_]{5,40}$/;
+  const patternMatches = regEx.test(userName);
+  return patternMatches;
 }
 
 function validateEmail(email) {

@@ -12,7 +12,7 @@ export function login(noroffBaseUrl, e) {
     emailError.classList.replace("d-none", "d-flex");
   }
 
-  if (validateLength(password.value, 6) === true) {
+  if (validateLength(password.value, 8) === true) {
     passwordError.classList.replace("d-flex", "d-none");
   } else {
     passwordError.classList.replace("d-none", "d-flex");
@@ -28,14 +28,15 @@ export function login(noroffBaseUrl, e) {
     };
 
     goLogin(bodyData, noroffBaseUrl).then((res) => {
-      console.log(res);
+      //   console.log(res);
       if (res.errors) {
         document.querySelector(
           "#loginError"
         ).innerHTML = `<h5>${res.errors[0].message}</h5>`;
       } else {
         localStorage.setItem("nat", res.accessToken);
-        window.location.href = "home.html";
+        localStorage.setItem("user", res.name);
+        window.location.href = `home.html`;
       }
     });
   }

@@ -17,7 +17,7 @@ main{
 }
 
 .formError{
-    @extend .text-danger, .text-center;
+    @extend .text-danger, .text-center, .flex-wrap;
 }
 
 //------------- Index Page --------------//
@@ -56,7 +56,7 @@ main{
                         @extend .row, .align-items-center, .mb-3;
 
                         & .email-header{
-                            @extend  .col-auto, .m-0;
+                            @extend  .col-auto, .m-0,  .align-self-start, .mt-2;
 
                             & label{
                                 @extend .form-label, .h6, .fw-bold, .p-1, .m-0;
@@ -160,7 +160,7 @@ main{
                         @extend .row,.align-items-start, .align-items-sm-center, .mb-3, .d-flex, .flex-column, .flex-sm-row;
 
                         & .username2-header{
-                            @extend  .col-auto, .m-0;
+                            @extend  .col-auto, .m-0,  .align-self-start, .mt-2;
 
                             & label{
                                 @extend .form-label, .h6, .fw-bold, .p-1, .m-0;
@@ -263,8 +263,7 @@ main{
                 }
 
                 & button{
-                    @extend .btn, .position-absolute, .end-0, .me-4;
-                    background-color: none;
+                    @extend .btn,.position-absolute, .end-0, .me-4,.bg-transparent, .text-dark;
                 }
             }
         }
@@ -272,6 +271,11 @@ main{
         & .profile-cont{
             @extend .d-flex, .flex-column, .align-items-center;
             width: variables.$w-50px;
+
+            & .user-profile-pic img{
+                @extend .rounded-circle, .bg-white;
+                width: variables.$w-50px;
+            }
 
             & .profile-menu{
                 @extend .dropdown;
@@ -302,7 +306,7 @@ main{
                 }
 
                 & button{
-                    @extend .btn, .position-absolute, .end-0, .me-4;
+                    @extend .btn ,.position-absolute, .end-0, .me-4;
                     background-color: none;
 
                 }
@@ -314,7 +318,7 @@ main{
         @extend .container-fluid, .d-block, .d-md-none, .p-0;
 
         & .dropdown-buttons-group-cont{
-            @extend .container-fluid, .btn-group, .border, .border-dark, .d-flex, .justify-content-between, .align-items-center, .mb-3, .d-md-none;
+            @extend .container-fluid, .btn-group, .border, .border-1, .rounded-2, .d-flex, .justify-content-between, .align-items-center, .mb-3, .d-md-none;
 
             & .profile-button-cont{
                 @extend .col-11;
@@ -375,10 +379,47 @@ main{
             @extend .p-0, .d-flex, .flex-column;
 
             & div{
-                @extend .mb-3;
+                @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
+
+                & .post-title{
+                    @extend .border-0;
+
+                    & input {
+                        @extend .border, .border-1, .p-1;
+                    }
+                }
 
                 & textarea {
-                    @extend .form-control;
+                    @extend .form-control, .border-0;
+                }
+
+                & .post-tags{
+                    @extend .post-title, .d-flex, .flex-column, .flex-sm-row;
+
+                    & label{
+                        @extend .mt-3;
+                        min-width: variables.$w-50px;
+                    }
+
+                    & .tag-input{
+                        @extend .post-title;
+
+                        & input{
+                            @extend .container-fluid;
+                        }
+                    }
+
+                    & .form-text{
+                        @extend .post-title;
+                    }
+                }
+
+                & .post-media{
+                    @extend .post-title;
+
+                    & input{
+                        @extend .border, .border-1, .p-1;
+                    }
                 }
             }
 
@@ -436,7 +477,7 @@ main{
         @extend .container-fluid, .d-none, .d-md-block;
 
         & .contacts-cont{
-            @extend .border, .border-dark, .rounded-2;
+            @extend .border, .border-1, .rounded-2;
 
             & .contact-profile-cont{
                 @extend .d-flex, .align-items-center, .p-2;
@@ -520,11 +561,53 @@ main{
         @extend .container-fluid, .mb-3, .d-block, .d-md-none;
 
         & form{
-            @extend .p-0, .d-flex, .flex-column;
+            @extend .p-1, .d-flex, .flex-column;
 
-            & textarea{
-                @extend .form-control, .mb-3;
+            & div{
+                @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
+
+                & .profile-post-title{
+                    @extend .border-0;
+
+                    & input {
+                        @extend .border, .border-1, .p-1;
+                    }
+                }
+
+                & textarea {
+                    @extend .form-control, .border-0;
+                }
+
+                & .profile-post-tags{
+                    @extend .border-0, .d-flex, .flex-column, .flex-sm-row;
+
+                    & label{
+                        @extend .mt-2;
+                        min-width: variables.$w-50px;
+                    }
+
+                    & .profile-tag-input{
+                        @extend .border-0;
+
+                        & input{
+                            @extend .container-fluid, .border, .border-1, .p-1;
+                        }
+                    }
+
+                    & .profile-form-text{
+                        @extend .profile-post-title;
+                    }
+                }
+
+                & .profile-post-media{
+                    @extend .border-0;
+
+                    & input{
+                        @extend .border, .border-1, .p-1;
+                    }
+                }
             }
+
 
             & button{
                 @extend .btn, .btn-primary, .align-self-end;
@@ -540,9 +623,50 @@ main{
 
             & form{
                 @extend .p-0, .d-flex, .flex-column;
+
+                & div{
+                    @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
     
-                & textarea{
-                    @extend .form-control, .mb-3;
+                    & .profile-post-title{
+                        @extend .border-0;
+    
+                        & input {
+                            @extend .border, .border-1, .p-1;
+                        }
+                    }
+    
+                    & textarea {
+                        @extend .form-control, .border-0;
+                    }
+    
+                    & .profile-post-tags{
+                        @extend .border-0, .d-flex, .flex-column, .flex-sm-row;
+    
+                        & label{
+                            @extend .mt-2;
+                            min-width: variables.$w-50px;
+                        }
+    
+                        & .profile-tag-input{
+                            @extend .border-0;
+    
+                            & input{
+                                @extend .container-fluid, .border, .border-1, .p-1;
+                            }
+                        }
+    
+                        & .profile-form-text{
+                            @extend .profile-post-title;
+                        }
+                    }
+    
+                    & .profile-post-media{
+                        @extend .border-0;
+    
+                        & input{
+                            @extend .border, .border-1, .p-1;
+                        }
+                    }
                 }
     
                 & button{
@@ -595,7 +719,7 @@ main{
         @extend .container-fluid, .d-none, .d-md-block;
 
         & .contacts-cont{
-            @extend .border, .border-dark, .rounded-2;
+            @extend .border, .border-1, .rounded-2;
 
             & .contact-profile-cont{
                 @extend .d-flex, .align-items-center, .p-2;
@@ -624,7 +748,7 @@ main{
     .fic-logo{
         width: variables.$w-50px;
     }
-    .header-nav .nav-cont .profile-cont{
+    .header-nav .nav-cont .profile-cont .user-profile-pic img{
         width: variables.$w-30px;
     }
 }
