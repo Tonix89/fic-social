@@ -1,3 +1,7 @@
+import { validateLength } from "../validate/length.mjs";
+import { validateEmail } from "../validate/email.mjs";
+import { validateUsername } from "../validate/username.mjs";
+
 const userName = document.getElementById("username2");
 const usernameError = document.getElementById("username2Error");
 const email = document.getElementById("email2");
@@ -59,25 +63,6 @@ export function signUp(noroffBaseUrl, e) {
       }
     });
   }
-}
-
-function validateLength(value, len) {
-  if (value.trim().length >= len) {
-    return true;
-  } else {
-    return false;
-  }
-}
-function validateUsername(userName) {
-  const regEx = /^[a-zåøæA-ZÅØÆÑ_]{5,40}$/;
-  const patternMatches = regEx.test(userName);
-  return patternMatches;
-}
-
-function validateEmail(email) {
-  const regEx = /^[a-zA-Z0-9._%+-]+@(stud\.noroff|noroff)\.no$/;
-  const patternMatches = regEx.test(email);
-  return patternMatches;
 }
 
 async function submitRegistration(bodyData, noroffBaseUrl) {

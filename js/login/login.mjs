@@ -1,3 +1,6 @@
+import { validateLength } from "../validate/length.mjs";
+import { validateEmail } from "../validate/email.mjs";
+
 const email = document.getElementById("email");
 const emailError = document.getElementById("emailError");
 const password = document.getElementById("password");
@@ -40,20 +43,6 @@ export function login(noroffBaseUrl, e) {
       }
     });
   }
-}
-
-function validateLength(value, len) {
-  if (value.trim().length >= len) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function validateEmail(email) {
-  const regEx = /^[a-zA-Z0-9._%+-]+@(stud\.noroff|noroff)\.no$/;
-  const patternMatches = regEx.test(email);
-  return patternMatches;
 }
 
 async function goLogin(bodyData, noroffBaseUrl) {

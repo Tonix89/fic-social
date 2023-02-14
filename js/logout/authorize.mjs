@@ -1,5 +1,5 @@
 import { getUserInfo } from "../user-profile/user-info.mjs";
-const auth = localStorage.getItem("nat");
+export const auth = localStorage.getItem("nat");
 const user = localStorage.getItem("user");
 
 if (!auth) {

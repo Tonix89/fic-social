@@ -110,27 +110,32 @@
         </div>
         <div class="create-post-cont">
             <h5>Create a post</h5>
-            <form>
-                <div>
+            <form class="post-form">
+                <div id="create-post">
+                    <div class="postError">
+                    </div>
                     <div class="post-title">
-                        <label class="h6">Title : <input id="postTitle" type="text" placeholder="(Required)"></label>
+                        <label class="h6">Title : <input class="post-input" id="postTitle" type="text" placeholder="(Required)"></label>
                         <div class="formError d-none" id="postTitleError">
-                            Title must be atleast 5-15 characters.
+                            Title must be atleast 5 characters.
                         </div>
                     </div>
-                    <textarea id="home-post-textarea" rows="3" placeholder="Type your post here...."></textarea>
+                    <textarea class="post-input" id="home-post-textarea" rows="3" placeholder="Type your post here...."></textarea>
                     <div class="post-tags">
                         <label class="h6" for="postTags">Tags : </label>
                         <div class="tag-input">
-                            <input id="postTags" type="text"  aria-describedby="tagHelp" placeholder="(Optional)">
+                            <input class="post-input" id="postTags" type="text"  aria-describedby="tagHelp" placeholder="(Optional)">
                         <div id="tagHelp" class="form-text">Use comma(,) if you have multiple tags.</div>
                         </div>
                     </div>
                     <div class="post-media">
-                        <label class="h6">Media Url : <input type="url" placeholder="(Optional)"></label>
+                        <label class="h6">Media Url : <input class="post-input" id="post-media" type="url" placeholder="(Optional)"></label>
+                        <div class="formError d-none" id="postMediaError">
+                            Invalid url.
+                        </div>
                     </div>
                 </div>
-                <button>Submit</button>
+                <button id="post-button">Submit<span id="post-loader" class="d-none" role="status" aria-hidden="true"></span></button>
             </form>
         </div>
         <div class="latest-post-cont">

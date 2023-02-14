@@ -378,6 +378,10 @@ main{
         & form{
             @extend .p-0, .d-flex, .flex-column;
 
+            & .postError{
+                @extend .border-0, .align-self-center;
+            }
+
             & div{
                 @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
 
@@ -425,6 +429,10 @@ main{
 
             & button{
                 @extend .btn, .btn-primary, .align-self-end;
+
+                & span{
+                    @extend .spinner-border, .spinner-border-sm, .ms-2;
+                }
             }
         }
     }
@@ -624,6 +632,10 @@ main{
             & form{
                 @extend .p-0, .d-flex, .flex-column;
 
+                & .postError{
+                    @extend .border-0, .align-self-center;
+                }
+
                 & div{
                     @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
     
@@ -671,6 +683,10 @@ main{
     
                 & button{
                     @extend .btn, .btn-primary, .align-self-end;
+
+                    & span{
+                        @extend .spinner-border, .spinner-border-sm, .ms-2;
+                    }
                 }
             }
         }

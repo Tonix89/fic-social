@@ -1,4 +1,5 @@
 import { logout } from "../logout/logout.mjs";
+import { getBodyData } from "../post/add-post.mjs";
 
 const profileBtn = document.querySelector("#profile-btn");
 const contactBtn = document.querySelector("#contact-btn");
@@ -23,4 +24,16 @@ contactBtn.addEventListener("click", function () {
   contactBtn.classList.add("active");
   profileBtn.classList.remove("active");
   profileCont.classList.replace("d-flex", "d-none");
+});
+
+const postTitleError = document.querySelector("#profilepostTitleError");
+const postMediaError = document.querySelector("#profile-postMediaError");
+const postBtn = document.querySelector("#profile-post-button");
+const postLoader = document.querySelector("#post-loader");
+const postInput = document.querySelectorAll(".post-input");
+const postError = document.querySelector(".postError");
+
+postBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  getBodyData(postInput, postTitleError, postMediaError, postError, postLoader);
 });

@@ -2,7 +2,7 @@ const userPic = document.querySelector(".user-pic");
 const profileInfo = document.querySelector(".profile-text");
 
 export function profileCard(userData) {
-  console.log(userData);
+  //   console.log(userData);
   const { name, email, banner, avatar } = userData;
   // console.log(name, email, banner, avatar);
   const { followers, following, posts } = userData._count;
