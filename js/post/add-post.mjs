@@ -16,13 +16,10 @@ export function getBodyData(
       return (input = "");
     }
   });
-  console.log(inputArray);
+  // console.log(inputArray);
   const [title, body, tags, media] = inputArray;
   const tagsArray = tags.split(",");
-  console.log(title);
-  console.log(postTitleError);
   if (validateLength(title, 5) === true) {
-    console.log("yes");
     postTitleError.classList.replace("d-flex", "d-none");
     if (media) {
       if (validateUrl(media) === true) {
@@ -45,17 +42,17 @@ export function getBodyData(
         tags: tagsArray,
         media: media,
       };
+      postMediaError.classList.replace("d-flex", "d-none");
       postLoader.classList.replace("d-none", "d-inline-block");
       addPost(postData, postError, postLoader);
     }
   } else {
-    console.log("no");
     postTitleError.classList.replace("d-none", "d-flex");
   }
 }
 
 function addPost(postData, postError, postLoader) {
-  fetch("https://pi.noroff.dev/api/v1/social/posts", {
+  fetch("https://api.noroff.dev/api/v1/social/posts", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -73,12 +70,15 @@ function addPost(postData, postError, postLoader) {
       if (data.id) {
         postLoader.classList.replace("d-inline-block", "d-none");
         postError.innerHTML = "New post submitted successfuly";
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
       }
     })
     .catch((error) => {
       postLoader.classList.replace("d-inline-block", "d-none");
       postError.innerHTML =
-        "There was a problem when submitting your post. Try again or reload the page." +
+        "There was a problem when submitting your post. Try again or reload the page. " +
         error;
     });
 }

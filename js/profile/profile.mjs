@@ -37,3 +37,21 @@ postBtn.addEventListener("click", function (e) {
   e.preventDefault();
   getBodyData(postInput, postTitleError, postMediaError, postError, postLoader);
 });
+
+const postTitleErrorSm = document.querySelector("#profilepostTitleErrorsm");
+const postMediaErrorSm = document.querySelector("#profile-postMediaErrorsm");
+const postBtnSm = document.querySelector("#profile-post-button-sm");
+const postLoaderSm = document.querySelector("#post-loader-sm");
+const postInputSm = document.querySelectorAll(".post-input-sm");
+const postErrorSm = document.querySelector(".postError-sm");
+
+postBtnSm.addEventListener("click", function (e) {
+  e.preventDefault();
+  getBodyData(
+    postInputSm,
+    postTitleErrorSm,
+    postMediaErrorSm,
+    postErrorSm,
+    postLoaderSm
+  );
+});

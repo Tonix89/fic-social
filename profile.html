@@ -110,25 +110,30 @@
             <h5>Create a post</h5>
             <form>
                 <div>
+                    <div class="postError-sm">
+                    </div>
                     <div class="profile-post-title">
-                        <label class="h6">Title : <input id="profilepostTitle" type="text" placeholder="(Required)"></label>
+                        <label class="h6">Title : <input class="post-input-sm" id="profilepostTitle-sm" type="text" placeholder="(Required)"></label>
                         <div class="formError d-none" id="profilepostTitleErrorsm">
                             Title must be atleast 5-15 characters.
                         </div>
                     </div>
-                    <textarea id="profile-post-textarea" rows="3" placeholder="Type your post here...."></textarea>
+                    <textarea class="post-input-sm" id="profile-post-textarea-sm" rows="3" placeholder="Type your post here...."></textarea>
                     <div class="profile-post-tags">
-                        <label class="h6" for="profilepostTags">Tags : </label>
+                        <label class="h6" for="profilepostTags-sm">Tags : </label>
                         <div class="profile-tag-input">
-                            <input id="profilepostTags" type="text"  aria-describedby="profiletagHelp" placeholder="(Optional)">
-                        <div id="profiletagHelp" class="profile-form-text">Use comma(,) if you have multiple tags.</div>
+                            <input class="post-input-sm" id="profilepostTags-sm" type="text"  aria-describedby="profiletagHelp-sm" placeholder="(Optional)">
+                        <div id="profiletagHelp-sm" class="profile-form-text">Use comma(,) if you have multiple tags.</div>
                         </div>
                     </div>
-                    <div class="profile-post-media">
-                        <label class="h6">Media Url : <input type="url" placeholder="(Optional)"></label>
+                    <div class="profile-post-media-sm">
+                        <label class="h6">Media Url : <input class="post-input-sm" type="url" placeholder="(Optional)"></label>
+                        <div class="formError d-none" id="profile-postMediaErrorsm">
+                            Invalid url.
+                        </div>
                     </div>
                 </div>
-                <button type="button">Submit</button>
+                <button id="profile-post-button-sm">Submit<span id="post-loader-sm" class="d-none" role="status" aria-hidden="true"></span></button>
             </form>
         </div>
         <div class="profile-post-cont">

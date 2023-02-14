@@ -379,7 +379,7 @@ main{
             @extend .p-0, .d-flex, .flex-column;
 
             & .postError{
-                @extend .border-0, .align-self-center;
+                @extend .border-0, .text-center, .fw-bold, .text-danger;
             }
 
             & div{
@@ -574,6 +574,10 @@ main{
             & div{
                 @extend .mb-3,.border, .border-1, .rounded-2, .p-1;
 
+                & .postError-sm{
+                    @extend .border-0, .text-center, .fw-bold, .text-danger;
+                }
+
                 & .profile-post-title{
                     @extend .border-0;
 
@@ -607,7 +611,7 @@ main{
                     }
                 }
 
-                & .profile-post-media{
+                & .profile-post-media-sm{
                     @extend .border-0;
 
                     & input{
@@ -633,7 +637,7 @@ main{
                 @extend .p-0, .d-flex, .flex-column;
 
                 & .postError{
-                    @extend .border-0, .align-self-center;
+                    @extend .border-0, .text-center, .fw-bold, .text-danger;
                 }
 
                 & div{
