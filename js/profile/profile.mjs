@@ -2,6 +2,7 @@ import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
 import { user } from "../logout/authorize.mjs";
+import { deletePost } from "../post/delete-post.mjs";
 
 const profileBtn = document.querySelector("#profile-btn");
 const contactBtn = document.querySelector("#contact-btn");
@@ -59,7 +60,18 @@ postBtnSm.addEventListener("click", function (e) {
 });
 
 const postCont = document.querySelector(".user-post-cont");
-
 const postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true`;
 
-getPost(postCont, postUrl);
+getPost(postCont, postUrl).then(function () {
+  const delBtn = document.querySelectorAll(".del-button");
+
+  delBtn.forEach((delBtnId) => {
+    delBtnId.addEventListener("click", function () {
+      console.log(delBtnId.id);
+      const confirmDelete = "Are you sure you want to delete this post?";
+      if (confirm(confirmDelete)) {
+        deletePost(delBtnId.id);
+      }
+    });
+  });
+});
