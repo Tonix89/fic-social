@@ -442,7 +442,8 @@ main{
         
 
         & .user-post-cont{
-            @extend .mb-3,.container-fluid;
+            @extend .mb-3,.container-fluid, .overflow-auto;
+            height: 90vh;
             width: variables.$w-35vw;
 
             & .post-card{
@@ -481,7 +482,7 @@ main{
                         @extend .d-flex, .align-self-end;
 
                         & div{
-                            @extend .btn;
+                            @extend .btn, .p-1;
                         }
                     }
                 }
@@ -703,8 +704,9 @@ main{
             }
         }
         & .user-post-cont{
-            @extend .mb-3;
-            min-width: variables.$w-35vw;
+            @extend .mb-3, .overflow-auto;
+            height: 90vh;
+            width: variables.$w-35vw;
 
             & .post-card{
                 @extend .card, .mb-3;
@@ -742,7 +744,7 @@ main{
                         @extend .d-flex, .align-self-end;
 
                         & div{
-                            @extend .btn;
+                            @extend .btn, .p-1;
                         }
                     }
                 }
@@ -790,7 +792,7 @@ main{
         width: variables.$w-90vw;
     }
     .profile-main .profile-post-cont .user-post-cont{
-        min-width: variables.$w-90vw;
+        width: variables.$w-90vw;
     }
 }
 

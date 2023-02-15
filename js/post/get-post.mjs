@@ -33,8 +33,10 @@ export function getPost(postCont, postUrl) {
         const { name, avatar } = author;
         const date = updated.split("T")[0];
         // console.log(date);
+        let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png">`;
         let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png">`;
         if (user !== name) {
+          editIcon = "";
           delIcon = "";
         }
         let userAvatar = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -55,11 +57,14 @@ export function getPost(postCont, postUrl) {
                 <div><p class="card-text"><small class="text-muted">Date : ${date}</small></p></div>
             </div>
             <div class="post-card-body">
+                <h6>${title}</h6>
                 <p class="post-text">${body}</p>
+                <img src="${media}">
                 <div class="post-buttons">
                     <div><img src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png"> ${reactions}</div>
                     <div><img src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png">${comments}</div>
                     <div class="del-button" id="${id}">${delIcon}</div>
+                    <div class="edit-button" id="${id}-${id}">${editIcon}</div>
                 </div>
             </div>
         </div> `;

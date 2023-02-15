@@ -3,6 +3,7 @@ import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
 import { user } from "../logout/authorize.mjs";
 import { deletePost } from "../post/delete-post.mjs";
+import { editPost } from "../post/edit-post.mjs";
 
 const profileBtn = document.querySelector("#profile-btn");
 const contactBtn = document.querySelector("#contact-btn");
@@ -38,7 +39,30 @@ const postError = document.querySelector(".postError");
 
 postBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  getBodyData(postInput, postTitleError, postMediaError, postError, postLoader);
+  const queryString = document.location.search;
+
+  const params = new URLSearchParams(queryString);
+
+  //console.log(params);
+  let postId = "";
+  const edit = params.get("edit");
+  if (edit) {
+    postId = edit;
+    document.querySelector(".edit-post").classList.remove("text-danger");
+    postInput.forEach((inputClass) => {
+      inputClass.classList.remove("text-danger");
+    });
+  }
+
+  console.log(postId);
+  getBodyData(
+    postInput,
+    postTitleError,
+    postMediaError,
+    postError,
+    postLoader,
+    postId
+  );
 });
 
 const postTitleErrorSm = document.querySelector("#profilepostTitleErrorsm");
@@ -50,12 +74,29 @@ const postErrorSm = document.querySelector(".postError-sm");
 
 postBtnSm.addEventListener("click", function (e) {
   e.preventDefault();
+  const queryString = document.location.search;
+
+  const params = new URLSearchParams(queryString);
+
+  //console.log(params);
+  let postId = "";
+  const edit = params.get("edit");
+  if (edit) {
+    postId = edit;
+    document.querySelector(".edit-post-sm").classList.remove("text-danger");
+    postInputSm.forEach((inputClass) => {
+      inputClass.classList.remove("text-danger");
+    });
+  }
+
+  console.log(postId);
   getBodyData(
     postInputSm,
     postTitleErrorSm,
     postMediaErrorSm,
     postErrorSm,
-    postLoaderSm
+    postLoaderSm,
+    postId
   );
 });
 
@@ -72,6 +113,62 @@ getPost(postCont, postUrl).then(function () {
       if (confirm(confirmDelete)) {
         deletePost(delBtnId.id);
       }
+    });
+  });
+
+  const editBtn = document.querySelectorAll(".edit-button");
+
+  editBtn.forEach((editBtnId) => {
+    editBtnId.addEventListener("click", function () {
+      const posttoEditId = editBtnId.id.split("-")[0];
+      // console.log(postId);
+      editPost(posttoEditId).then((data) => {
+        // console.log(data);
+        const { title, body, tags, media } = data;
+        // console.log(title, body, tags, media);
+
+        const inputArraySm = Array.prototype.slice.call(postInputSm);
+        const [titleInputSm, bodyInputSm, tagsInputSm, mediaInputSm] =
+          inputArraySm;
+        titleInputSm.value = title;
+        bodyInputSm.value = body;
+        tagsInputSm.value = tags;
+        mediaInputSm.value = media;
+
+        document.querySelector(".edit-post-sm").innerHTML = "Edit Post";
+        document.querySelector(".edit-post-sm").classList.add("text-danger");
+        postInputSm.forEach((inputClass) => {
+          inputClass.classList.add("text-danger");
+        });
+
+        const inputArray = Array.prototype.slice.call(postInput);
+        const [titleInput, bodyInput, tagsInput, mediaInput] = inputArray;
+        titleInput.value = title;
+        bodyInput.value = body;
+        tagsInput.value = tags;
+        mediaInput.value = media;
+
+        const queryString = document.location.search;
+        const params = new URLSearchParams(queryString);
+        const edits = params.get("edit");
+        if (!edits) {
+          const url = window.location.href;
+          const newUrl = url + "?edit=" + data.id;
+          window.history.pushState({ path: newUrl }, "", newUrl);
+        } else {
+          var url = new URL(window.location.href);
+          url.searchParams.set("edit", data.id);
+          window.history.replaceState(null, "", url);
+        }
+
+        document.querySelector(".edit-post").innerHTML = "Edit Post";
+        document.querySelector(".edit-post").classList.add("text-danger");
+        postInput.forEach((inputClass) => {
+          inputClass.classList.add("text-danger");
+        });
+
+        document.querySelector(".header-nav").scrollIntoView();
+      });
     });
   });
 });
