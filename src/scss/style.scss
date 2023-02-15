@@ -438,10 +438,12 @@ main{
     }
 
     & .latest-post-cont{
-        @extend .create-post-cont;
+        @extend .mb-3, .p-0;
+        
 
         & .user-post-cont{
-            @extend .mb-3;
+            @extend .mb-3,.container-fluid;
+            width: variables.$w-35vw;
 
             & .post-card{
                 @extend .card, .mb-3;
@@ -451,6 +453,12 @@ main{
 
                     & .user-cont{
                         @extend .d-flex, .align-items-center;
+
+                        & img{
+                            @extend .rounded-circle;
+                            width: variables.$w-25px;
+                            height: variables.$w-25px;
+                        }
 
                         & .user-header-cont{
                             @extend .ps-3;
@@ -696,6 +704,7 @@ main{
         }
         & .user-post-cont{
             @extend .mb-3;
+            min-width: variables.$w-35vw;
 
             & .post-card{
                 @extend .card, .mb-3;
@@ -705,6 +714,12 @@ main{
 
                     & .user-cont{
                         @extend .d-flex, .align-items-center;
+
+                        & img{
+                            @extend .rounded-circle;
+                            width: variables.$w-25px;
+                            height: variables.$w-25px;
+                        }
 
                         & .user-header-cont{
                             @extend .ps-3;
@@ -770,6 +785,12 @@ main{
     }
     .header-nav .nav-cont .profile-cont .user-profile-pic img{
         width: variables.$w-30px;
+    }
+    .home-main .latest-post-cont .user-post-cont{
+        width: variables.$w-90vw;
+    }
+    .profile-main .profile-post-cont .user-post-cont{
+        min-width: variables.$w-90vw;
     }
 }
 

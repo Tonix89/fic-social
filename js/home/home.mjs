@@ -1,5 +1,7 @@
 import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
+// import { auth } from "../logout/authorize.mjs";
+import { getPost } from "../post/get-post.mjs";
 
 const logOutBtn = document.querySelector(".logout");
 
@@ -18,3 +20,9 @@ postBtn.addEventListener("click", function (e) {
   e.preventDefault();
   getBodyData(postInput, postTitleError, postMediaError, postError, postLoader);
 });
+
+const postCont = document.querySelector(".user-post-cont");
+
+const postUrl = "https://api.noroff.dev/api/v1/social/posts?_author=true";
+
+getPost(postCont, postUrl);

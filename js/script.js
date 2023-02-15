@@ -10,11 +10,11 @@ const showPw = document.getElementById("showPw");
 
 const noroffBaseUrl = "https://api.noroff.dev/api/v1";
 
-const noroffToken = localStorage.getItem("nat");
-const noroffUser = localStorage.getItem("user");
+export const noroffToken = localStorage.getItem("nat");
+export const noroffUser = localStorage.getItem("user");
 
 if (noroffToken && noroffUser) {
-  window.location.href = `home.html?id=${noroffUser}`;
+  window.location.href = `home.html`;
 }
 
 logBtn.addEventListener("click", function (e) {

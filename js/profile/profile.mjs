@@ -1,5 +1,7 @@
 import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
+import { getPost } from "../post/get-post.mjs";
+import { user } from "../logout/authorize.mjs";
 
 const profileBtn = document.querySelector("#profile-btn");
 const contactBtn = document.querySelector("#contact-btn");
@@ -55,3 +57,9 @@ postBtnSm.addEventListener("click", function (e) {
     postLoaderSm
   );
 });
+
+const postCont = document.querySelector(".user-post-cont");
+
+const postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true`;
+
+getPost(postCont, postUrl);
