@@ -13,16 +13,19 @@
 </head>
 <body>
     <header>
-        <nav class="header-nav sticky-top">
+        <nav class="header-nav">
             <div class="nav-cont">
               <a href="home.html"><img src="images/fic-social-logo.png" alt="FIC Social logo" class="fic-logo"></a>
               <div class="search-form-cont">
-                <form role="search">
-                  <input type="search" placeholder="Search" aria-label="Search" style="width: 310px;">
-                  <button  type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <form id="search-form" role="search">
+                  <input class="search-input" type="search" placeholder="Search for tag, user or id" aria-label="Search" style="width: 310px;">
+                  <button class="search-button" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                   </svg></button>
                 </form>
+                <ul class="dropdown-menu" id="tagList">
+                    <li><h6 class="dropdown-header">Suggested Tags</h6></li>
+                </ul>
               </div>
               <div class="profile-cont">
                 <div class="user-profile-pic">
@@ -45,13 +48,16 @@
     </header>
     <main class="home-main">
         <div class="search-cont">
-            <div class="search-form-cont">
-                <form  role="search">
-                    <input type="search" placeholder="Search" aria-label="Search" style="min-width: 300px;">
-                    <button  type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <div class="search-form-cont2">
+                <form class="search-form" role="search">
+                    <input class="search-input2" type="search" placeholder="Search for tag, user or id" aria-label="Search" style="min-width: 300px;">
+                    <button class="search-button2" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg></button>
                 </form>
+                <ul class="dropdown-menu" id="tagList2">
+                    <li><h6 class="dropdown-header">Suggested Tags</h6></li>
+                </ul>
             </div>
         </div>
         <div class="small-screen-contacts-cont">
@@ -135,11 +141,11 @@
                         </div>
                     </div>
                 </div>
-                <button id="post-button">Submit<span id="post-loader" class="d-none" role="status" aria-hidden="true"></span></button>
+                <button id="post-button">Submit<span id="submit-post-loader" class="d-none" role="status" aria-hidden="true"></span></button>
             </form>
         </div>
         <div class="latest-post-cont">
-            <h5>Latest Post</h5>
+            <h5 class="post-header">Latest Post</h5>
             <div class="user-post-cont">
                 <div class
                 ="post-loader d-flex justify-content-center">

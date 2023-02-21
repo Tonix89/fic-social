@@ -1,6 +1,18 @@
 import { auth } from "../logout/authorize.mjs";
+export function goDelete(delBtnId) {
+  if (!delBtnId.innerHTML) {
+    delBtnId.style.display = "none";
+  }
+  delBtnId.addEventListener("click", function () {
+    console.log(delBtnId.id);
+    const confirmDelete = "Are you sure you want to delete this post?";
+    if (confirm(confirmDelete)) {
+      deletePost(delBtnId.id);
+    }
+  });
+}
 
-export function deletePost(postId) {
+function deletePost(postId) {
   fetch("https://api.noroff.dev/api/v1/social/posts/" + postId, {
     method: "DELETE",
     headers: {

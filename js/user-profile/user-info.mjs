@@ -8,8 +8,9 @@ const userInfoUrl = "https://api.noroff.dev/api/v1/social/profiles/";
 export function getUserInfo(auth, user) {
   getRequest(auth, user)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res) {
+        // console.log(res);
         if (window.location.pathname === "/profile.html") {
           profileCard(res);
         }

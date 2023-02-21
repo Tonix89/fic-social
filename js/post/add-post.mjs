@@ -79,6 +79,7 @@ function addPost(postData, postError, postLoader, postId) {
   console.log(url, bodyData);
   fetch(url, bodyData)
     .then((response) => {
+      console.log(response);
       if (response.ok) {
         return response.json();
       }

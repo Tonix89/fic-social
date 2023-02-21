@@ -266,6 +266,10 @@ main{
                     @extend .btn,.position-absolute, .end-0, .me-4,.bg-transparent, .text-dark;
                 }
             }
+            & ul{
+                @extend .overflow-auto;
+                height: 250px;
+            }
         }
 
         & .profile-cont{
@@ -294,7 +298,7 @@ main{
     & .search-cont{
         @extend .container-fluid, .mb-3, .d-block, .d-md-none, .p-0;
 
-        & .search-form-cont{
+        & .search-form-cont2{
             @extend .d-block, .d-md-none;
 
             & form{
@@ -310,6 +314,10 @@ main{
                     background-color: none;
 
                 }
+            }
+            & ul{
+                @extend .overflow-auto;
+                height: 250px;
             }
         }
     }
@@ -438,8 +446,7 @@ main{
     }
 
     & .latest-post-cont{
-        @extend .mb-3, .p-0;
-        
+        @extend .mb-3, .p-0; 
 
         & .user-post-cont{
             @extend .mb-3,.container-fluid, .overflow-auto;
@@ -479,10 +486,11 @@ main{
                     }
 
                     & .post-buttons{
-                        @extend .d-flex, .align-self-end;
+                        @extend .d-flex, .align-self-end, .mt-3;
 
                         & div{
-                            @extend .btn, .p-1;
+                            @extend .btn, .p-0,.m-2;
+
                         }
                     }
                 }
@@ -513,6 +521,33 @@ main{
 
 .profile-main{
     @extend .home-main;
+
+    & .search-cont{
+        @extend .container-fluid, .mb-3, .d-block, .d-md-none, .p-0;
+
+        & .search-form-cont2{
+            @extend .d-block, .d-md-none;
+
+            & form{
+                @extend .d-flex, .position-relative;
+
+                & input{
+                    @extend .form-control, .pe-5, .me-4, .rounded-4;
+                    padding-right: variables.$w-5rem;
+                }
+
+                & button{
+                    @extend .btn ,.position-absolute, .end-0, .me-4;
+                    background-color: none;
+
+                }
+            }
+            & ul{
+                @extend .overflow-auto;
+                height: 250px;
+            }
+        }
+    }
 
     & .profile-card-cont{
         @extend .container-fluid, .p-0;
@@ -547,12 +582,25 @@ main{
             & .profile-card-body{
                 @extend .card-body, .flex-column, .align-items-center, .justify-content-between, .gap-5;
 
-                & .profile-text{
-                    @extend .align-self-start, .d-flex, .flex-column, .align-items-start;
+                & .avatar{
+                    @extend .rounded-circle;
+                width: variables.$w-100px;
                 }
 
-                & button{
-                    @extend .btn, .btn-light;
+                & .update-icon{
+                    left:variables.$start-75;
+                }
+
+                & .profile-text{
+                    @extend .align-self-start, .flex-column, .align-items-start;
+                }
+
+                // & .edit-profile-button{
+                //     @extend .btn, .btn-secondary;
+                // }
+
+                & .submit-profile-button{
+                    @extend .btn, .btn-primary;
                 }
             }
 
@@ -704,7 +752,7 @@ main{
             }
         }
         & .user-post-cont{
-            @extend .mb-3, .overflow-auto;
+            @extend .mb-3, .container-fluid,.overflow-auto,.p-0;
             height: 90vh;
             width: variables.$w-35vw;
 
@@ -741,10 +789,10 @@ main{
                     }
 
                     & .post-buttons{
-                        @extend .d-flex, .align-self-end;
+                        @extend .d-flex, .align-self-end, .mt-3;
 
                         & div{
-                            @extend .btn, .p-1;
+                            @extend .btn, .p-0, .m-2;
                         }
                     }
                 }
@@ -801,6 +849,9 @@ main{
         width: 85vw;
     }
     .index-main .login-card-cont .login-card .login-form .form-cont .email-cont .email-input input{
+        width: 85vw;
+    }
+    .profile-main .profile-post-cont .user-post-cont{
         width: 85vw;
     }
 }

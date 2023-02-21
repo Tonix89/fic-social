@@ -2,19 +2,26 @@ import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
 import { user } from "../logout/authorize.mjs";
-import { deletePost } from "../post/delete-post.mjs";
-import { editPost } from "../post/edit-post.mjs";
+import { gotoedit } from "../post/edit-post.mjs";
+import { tagsArray } from "../post/filter-post.mjs";
+import { deleteEditParam } from "../function/delete-param.mjs";
+import { goDelete } from "../post/delete-post.mjs";
+import { validateUrl } from "../validate/url.mjs";
+import { sendPicture } from "../user-profile/update-profile.mjs";
+import { hitLike } from "../post/like.mjs";
+import { goSearch } from "../search/search-button/button1.mjs";
+
+deleteEditParam();
+
+const logOutBtn = document.querySelector(".logout");
+logOutBtn.addEventListener("click", function () {
+  logout();
+});
 
 const profileBtn = document.querySelector("#profile-btn");
 const contactBtn = document.querySelector("#contact-btn");
 const profileCont = document.querySelector("#profile-cont");
 const contactCont = document.querySelector("#contact-cont");
-
-const logOutBtn = document.querySelector(".logout");
-
-logOutBtn.addEventListener("click", function () {
-  logout();
-});
 
 profileBtn.addEventListener("click", function () {
   profileCont.classList.replace("d-none", "d-flex");
@@ -33,7 +40,7 @@ contactBtn.addEventListener("click", function () {
 const postTitleError = document.querySelector("#profilepostTitleError");
 const postMediaError = document.querySelector("#profile-postMediaError");
 const postBtn = document.querySelector("#profile-post-button");
-const postLoader = document.querySelector("#post-loader");
+const submitPostLoader = document.querySelector("#submit-post-loader");
 const postInput = document.querySelectorAll(".post-input");
 const postError = document.querySelector(".postError");
 
@@ -60,7 +67,7 @@ postBtn.addEventListener("click", function (e) {
     postTitleError,
     postMediaError,
     postError,
-    postLoader,
+    submitPostLoader,
     postId
   );
 });
@@ -68,7 +75,7 @@ postBtn.addEventListener("click", function (e) {
 const postTitleErrorSm = document.querySelector("#profilepostTitleErrorsm");
 const postMediaErrorSm = document.querySelector("#profile-postMediaErrorsm");
 const postBtnSm = document.querySelector("#profile-post-button-sm");
-const postLoaderSm = document.querySelector("#post-loader-sm");
+const submitPostLoaderSm = document.querySelector("#submit-post-loader-sm");
 const postInputSm = document.querySelectorAll(".post-input-sm");
 const postErrorSm = document.querySelector(".postError-sm");
 
@@ -95,80 +102,123 @@ postBtnSm.addEventListener("click", function (e) {
     postTitleErrorSm,
     postMediaErrorSm,
     postErrorSm,
-    postLoaderSm,
+    submitPostLoaderSm,
     postId
   );
 });
 
+const searchForm = document.querySelector(".search-form-cont");
+const searchInput = document.querySelector(".search-input");
+const searchForm2 = document.querySelector(".search-form-cont2");
+const searchInput2 = document.querySelector(".search-input2");
+const postHeader = document.querySelector(".post-header");
+const searchBtn = document.querySelector(".search-button");
+const searchBtn2 = document.querySelector(".search-button2");
+
 const postCont = document.querySelector(".user-post-cont");
-const postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true`;
+const postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true`;
 
-getPost(postCont, postUrl).then(function () {
+getPost(postUrl, postCont).then((data) => {
+  // console.log(data);
+  const tagList = document.querySelector("#tagList");
+  tagsArray(data, tagList);
+
+  const tagList2 = document.querySelector("#tagList2");
+  tagsArray(data, tagList2);
   const delBtn = document.querySelectorAll(".del-button");
-
   delBtn.forEach((delBtnId) => {
-    delBtnId.addEventListener("click", function () {
-      console.log(delBtnId.id);
-      const confirmDelete = "Are you sure you want to delete this post?";
-      if (confirm(confirmDelete)) {
-        deletePost(delBtnId.id);
-      }
-    });
+    goDelete(delBtnId);
   });
-
   const editBtn = document.querySelectorAll(".edit-button");
-
   editBtn.forEach((editBtnId) => {
-    editBtnId.addEventListener("click", function () {
-      const posttoEditId = editBtnId.id.split("-")[0];
-      // console.log(postId);
-      editPost(posttoEditId).then((data) => {
-        // console.log(data);
-        const { title, body, tags, media } = data;
-        // console.log(title, body, tags, media);
+    gotoedit(postInput, editBtnId);
+  });
+  const likeBtn = document.querySelectorAll(".react-like");
+  likeBtn.forEach((likeBtnId) => {
+    // console.log(likeBtnId.id);
+    hitLike(likeBtnId);
+  });
+});
 
-        const inputArraySm = Array.prototype.slice.call(postInputSm);
-        const [titleInputSm, bodyInputSm, tagsInputSm, mediaInputSm] =
-          inputArraySm;
-        titleInputSm.value = title;
-        bodyInputSm.value = body;
-        tagsInputSm.value = tags;
-        mediaInputSm.value = media;
+searchForm.addEventListener("mouseover", function () {
+  document.querySelector("#tagList").style.display = "block";
+  getTag(searchInput);
+});
 
-        document.querySelector(".edit-post-sm").innerHTML = "Edit Post";
-        document.querySelector(".edit-post-sm").classList.add("text-danger");
-        postInputSm.forEach((inputClass) => {
-          inputClass.classList.add("text-danger");
-        });
+searchForm.addEventListener("mouseout", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
 
-        const inputArray = Array.prototype.slice.call(postInput);
-        const [titleInput, bodyInput, tagsInput, mediaInput] = inputArray;
-        titleInput.value = title;
-        bodyInput.value = body;
-        tagsInput.value = tags;
-        mediaInput.value = media;
+searchForm2.addEventListener("mouseover", function () {
+  document.querySelector("#tagList2").style.display = "block";
+  getTag(searchInput2);
+});
 
-        const queryString = document.location.search;
-        const params = new URLSearchParams(queryString);
-        const edits = params.get("edit");
-        if (!edits) {
-          const url = window.location.href;
-          const newUrl = url + "?edit=" + data.id;
-          window.history.pushState({ path: newUrl }, "", newUrl);
-        } else {
-          var url = new URL(window.location.href);
-          url.searchParams.set("edit", data.id);
-          window.history.replaceState(null, "", url);
-        }
+searchForm2.addEventListener("mouseout", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
 
-        document.querySelector(".edit-post").innerHTML = "Edit Post";
-        document.querySelector(".edit-post").classList.add("text-danger");
-        postInput.forEach((inputClass) => {
-          inputClass.classList.add("text-danger");
-        });
+searchBtn.addEventListener("click", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
 
-        document.querySelector(".header-nav").scrollIntoView();
-      });
+searchBtn2.addEventListener("click", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
+
+function getTag(inputValue) {
+  // console.log(inputValue);
+  const postTags = Array.prototype.slice.call(
+    document.querySelectorAll(".postTags")
+  );
+  // console.log(postTags);
+  postTags.forEach((tag) => {
+    // console.log(tag.innerHTML);
+    tag.addEventListener("click", function (e) {
+      e.preventDefault();
+      // console.log(tag.innerHTML);
+      inputValue.value = `#${tag.innerHTML}`;
     });
   });
+}
+
+searchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  postHeader.scrollIntoView();
+  goSearch(searchInput, postCont);
+});
+
+searchBtn2.addEventListener("click", function (e) {
+  e.preventDefault();
+  postHeader.scrollIntoView();
+  goSearch(searchInput2, postCont);
+});
+
+const updateProfile = document.querySelector(".update-profile-button");
+updateProfile.addEventListener("click", function () {
+  const updateBtns = document.querySelector(".update-buttons");
+  const updateLdr = document.querySelector(".update-loader");
+  const mediaInput = document.querySelector(".media-input");
+  const editProfileCont = document.querySelector(".edit-profile-cont");
+  const profilePictureError = document.querySelector("#profile-pictureError");
+  if (mediaInput.value) {
+    if (validateUrl(mediaInput.value) === true) {
+      updateBtns.classList.replace("d-block", "d-none");
+      updateLdr.classList.replace("d-none", "d-inline-block");
+      profilePictureError.classList.replace("d-flex", "d-none");
+      sendPicture(mediaInput.value, profilePictureError).then((data) => {
+        if (data.name) {
+          updateLdr.classList.replace("d-inline-block", "d-none");
+          editProfileCont.innerHTML = `<h3 class="text-center">Profile Picture is Successfully Updated!</h3>`;
+          setTimeout(() => {
+            location.reload();
+          }, 3000);
+        } else {
+          editProfileCont.innerHTML = `<h3>Sorry we have an error : ${data}`;
+        }
+      });
+    } else {
+      profilePictureError.classList.replace("d-none", "d-flex");
+    }
+  }
 });

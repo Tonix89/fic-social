@@ -1,8 +1,16 @@
 import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
-import { deletePost } from "../post/delete-post.mjs";
-import { editPost } from "../post/edit-post.mjs";
+import { gotoedit } from "../post/edit-post.mjs";
+import { tagsArray } from "../post/filter-post.mjs";
+import { deleteEditParam } from "../function/delete-param.mjs";
+import { tagUserSearch } from "../search/tagUser-search.mjs";
+import { idSearch } from "../search/id-search.mjs";
+import { goDelete } from "../post/delete-post.mjs";
+import { hitLike } from "../post/like.mjs";
+import { goSearch } from "../search/search-button/button1.mjs";
+
+deleteEditParam();
 
 const logOutBtn = document.querySelector(".logout");
 
@@ -10,15 +18,54 @@ logOutBtn.addEventListener("click", function () {
   logout();
 });
 
+const postCont = document.querySelector(".user-post-cont");
+
+const postUrl =
+  "https://api.noroff.dev/api/v1/social/posts?_author=true&_comments=true&_reactions=true";
+
+getPost(postUrl, postCont).then((data) => {
+  // console.log(data);
+
+  const tagList = document.querySelector("#tagList");
+  tagsArray(data, tagList);
+
+  const tagList2 = document.querySelector("#tagList2");
+  tagsArray(data, tagList2);
+
+  const delBtn = document.querySelectorAll(".del-button");
+  delBtn.forEach((delBtnId) => {
+    goDelete(delBtnId);
+  });
+
+  const postInput = document.querySelectorAll(".post-input");
+  const editBtn = document.querySelectorAll(".edit-button");
+  editBtn.forEach((editBtnId) => {
+    gotoedit(postInput, editBtnId);
+  });
+
+  const likeBtn = document.querySelectorAll(".react-like");
+  likeBtn.forEach((likeBtnId) => {
+    // console.log(likeBtnId.id);
+    hitLike(likeBtnId);
+  });
+});
+
 const postTitleError = document.querySelector("#postTitleError");
 const postMediaError = document.querySelector("#postMediaError");
 const postBtn = document.querySelector("#post-button");
-const postLoader = document.querySelector("#post-loader");
-const postInput = document.querySelectorAll(".post-input");
+const submitPostLoader = document.querySelector("#submit-post-loader");
 const postError = document.querySelector(".postError");
+const searchForm = document.querySelector(".search-form-cont");
+const searchInput = document.querySelector(".search-input");
+const searchForm2 = document.querySelector(".search-form-cont2");
+const searchInput2 = document.querySelector(".search-input2");
+const postHeader = document.querySelector(".post-header");
+const searchBtn = document.querySelector(".search-button");
+const searchBtn2 = document.querySelector(".search-button2");
 
 postBtn.addEventListener("click", function (e) {
   e.preventDefault();
+  const postInput = document.querySelectorAll(".post-input");
   const queryString = document.location.search;
 
   const params = new URLSearchParams(queryString);
@@ -38,68 +85,60 @@ postBtn.addEventListener("click", function (e) {
     postTitleError,
     postMediaError,
     postError,
-    postLoader,
+    submitPostLoader,
     postId
   );
 });
 
-const postCont = document.querySelector(".user-post-cont");
+searchForm.addEventListener("mouseover", function () {
+  document.querySelector("#tagList").style.display = "block";
+  getTag(searchInput);
+});
 
-const postUrl = "https://api.noroff.dev/api/v1/social/posts?_author=true";
+searchForm.addEventListener("mouseout", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
 
-getPost(postCont, postUrl).then(function () {
-  const delBtn = document.querySelectorAll(".del-button");
+searchForm2.addEventListener("mouseover", function () {
+  document.querySelector("#tagList2").style.display = "block";
+  getTag(searchInput2);
+});
 
-  delBtn.forEach((delBtnId) => {
-    delBtnId.addEventListener("click", function () {
-      console.log(delBtnId.id);
-      const confirmDelete = "Are you sure you want to delete this post?";
-      if (confirm(confirmDelete)) {
-        deletePost(delBtnId.id);
-      }
+searchForm2.addEventListener("mouseout", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
+
+searchBtn.addEventListener("click", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
+
+searchBtn2.addEventListener("click", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
+
+function getTag(inputValue) {
+  // console.log(inputValue);
+  const postTags = Array.prototype.slice.call(
+    document.querySelectorAll(".postTags")
+  );
+  // console.log(postTags);
+  postTags.forEach((tag) => {
+    // console.log(tag.innerHTML);
+    tag.addEventListener("click", function (e) {
+      e.preventDefault();
+      // console.log(tag.innerHTML);
+      inputValue.value = `#${tag.innerHTML}`;
     });
   });
+}
 
-  const editBtn = document.querySelectorAll(".edit-button");
+searchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  goSearch(searchInput, postCont);
+});
 
-  editBtn.forEach((editBtnId) => {
-    editBtnId.addEventListener("click", function () {
-      const posttoEditId = editBtnId.id.split("-")[0];
-      // console.log(postId);
-      editPost(posttoEditId).then((data) => {
-        // console.log(data);
-        const { title, body, tags, media } = data;
-        // console.log(title, body, tags, media);
-
-        const inputArray = Array.prototype.slice.call(postInput);
-        const [titleInput, bodyInput, tagsInput, mediaInput] = inputArray;
-        titleInput.value = title;
-        bodyInput.value = body;
-        tagsInput.value = tags;
-        mediaInput.value = media;
-
-        postInput.forEach((inputClass) => {
-          inputClass.classList.add("text-danger");
-        });
-
-        const queryString = document.location.search;
-        const params = new URLSearchParams(queryString);
-        const edit = params.get("edit");
-        if (!edit) {
-          const url = window.location.href;
-          const newUrl = url + "?edit=" + data.id;
-          window.history.pushState({ path: newUrl }, "", newUrl);
-        } else {
-          var url = new URL(window.location.href);
-          url.searchParams.set("edit", data.id);
-          window.history.replaceState(null, "", url);
-        }
-
-        document.querySelector(".edit-post").innerHTML = "Edit Post";
-        document.querySelector(".edit-post").classList.add("text-danger");
-
-        document.querySelector(".header-nav").scrollIntoView();
-      });
-    });
-  });
+searchBtn2.addEventListener("click", function (e) {
+  e.preventDefault();
+  postHeader.scrollIntoView();
+  goSearch(searchInput2, postCont);
 });
