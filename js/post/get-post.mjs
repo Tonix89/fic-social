@@ -84,7 +84,7 @@ export async function getPost(postUrl, postCont) {
                   <img src="${mediaUrl}">
                   <div class="post-buttons ">
                       <div class="position-relative">${likeCont}</div>
-                      <div class="position-relative"><img  class="position-relative" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">${comments}</span></div>
+                      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#comment"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}com-counter">${comments}</span></div>
                       <div class="del-button" id="${id}">${delIcon}</div>
                       <div class="edit-button" id="${id}-${id}">${editIcon}</div>
                   </div>

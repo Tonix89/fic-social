@@ -2,6 +2,7 @@ import { getPost } from "../post/get-post.mjs";
 import { gotoedit } from "../post/edit-post.mjs";
 import { goDelete } from "../post/delete-post.mjs";
 import { hitLike } from "../post/like.mjs";
+import { openComment } from "../comment/comments.mjs";
 
 export function tagUserSearch(searchInput, searchUrl, postCont) {
   postCont.innerHTML = `<div class
@@ -59,6 +60,15 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
     likeBtn.forEach((likeBtnId) => {
       // console.log(likeBtnId.id);
       hitLike(likeBtnId);
+    });
+
+    const commentBtn = document.querySelectorAll(".comment-button");
+    commentBtn.forEach((commentBtnId) => {
+      commentBtnId.addEventListener("click", function () {
+        console.log(commentBtnId.id);
+        const postId = commentBtnId.id.split(".")[0];
+        openComment(postId);
+      });
     });
   });
 }

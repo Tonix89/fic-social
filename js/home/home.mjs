@@ -4,11 +4,10 @@ import { getPost } from "../post/get-post.mjs";
 import { gotoedit } from "../post/edit-post.mjs";
 import { tagsArray } from "../post/filter-post.mjs";
 import { deleteEditParam } from "../function/delete-param.mjs";
-import { tagUserSearch } from "../search/tagUser-search.mjs";
-import { idSearch } from "../search/id-search.mjs";
 import { goDelete } from "../post/delete-post.mjs";
 import { hitLike } from "../post/like.mjs";
 import { goSearch } from "../search/search-button/button1.mjs";
+import { openComment } from "../comment/comments.mjs";
 
 deleteEditParam();
 
@@ -47,6 +46,15 @@ getPost(postUrl, postCont).then((data) => {
   likeBtn.forEach((likeBtnId) => {
     // console.log(likeBtnId.id);
     hitLike(likeBtnId);
+  });
+
+  const commentBtn = document.querySelectorAll(".comment-button");
+  commentBtn.forEach((commentBtnId) => {
+    commentBtnId.addEventListener("click", function () {
+      console.log(commentBtnId.id);
+      const postId = commentBtnId.id.split(".")[0];
+      openComment(postId);
+    });
   });
 });
 

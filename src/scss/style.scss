@@ -821,6 +821,15 @@ main{
     }
 }
 
+.comment-cont-div{
+    @extend .row, .g-0;
+
+    & #comment-img-cont{
+        @extend .col-md-8;
+        height:90vh;
+    }
+}
+
 
 @include media-breakpoint-up(lg) {
     .index-main .login-card-cont{
@@ -841,6 +850,9 @@ main{
     }
     .profile-main .profile-post-cont .user-post-cont{
         width: variables.$w-90vw;
+    }
+    .comment-cont-div #comment-img-cont{
+        height:50vh;
     }
 }
 
