@@ -2,7 +2,7 @@ import { getPostDetails } from "../post/post-details.mjs";
 import { countsLike } from "../post/like.mjs";
 import { isItLiked } from "../post/liked-post.mjs";
 import { user } from "../logout/authorize.mjs";
-import { auth } from "../logout/authorize.mjs";
+import { getComments } from "./get-comments.mjs";
 
 export function openComment(id) {
   getPostDetails(id).then((data) => {
@@ -36,7 +36,7 @@ export function openComment(id) {
     const finalTime = time.split(".")[0];
     const commentCounter = document.getElementById(`${id}com-counter`);
     commentCounter.innerHTML = comments;
-    console.log(commentCounter, comments);
+    // console.log(commentCounter, comments);
     let mediaUrl = media;
     if (!media) {
       mediaUrl = "";
@@ -101,142 +101,4 @@ export function openComment(id) {
     const commentCard = document.querySelector(".comments-card");
     getComments(data, commentCard);
   });
-}
-
-function getComments(data, commentCard) {
-  //   console.log(data);
-  const mainComments = data.comments.filter((comments) => {
-    if (!comments.replyToId) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  mainComments.forEach((comment) => {
-    const { body, replyToId, id, postId, owner, created, author } = comment;
-    const { name, email, avatar, banner } = author;
-    commentCard.innerHTML += `<div class="border-bottom mb-2">
-    <div class="d-flex ">
-        <img class="rounded-circle" style="width:25px;height:25px" src="${avatar}"/>
-        <div class="user-header-cont ps-3 flex-grow-1">
-            <h5 class="m-0">${name}</h5>
-        </div>
-        <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created :${created}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
-    </div>
-    <div class="d-flex flex-column">
-        <p class="mt-3">${body}</p>
-        <div class="ps-5 pe-5" id="${postId}-reply"></div>
-        <div class="align-self-end">
-            <div class="reply-button btn p-0 m-2" id="${id}">Reply</div>
-        </div>
-        <div class="row text-center m-1 d-none reply-cont" id="${id}-reply-cont">
-        <input class="comment-input col-10 border border-1 border-light rounded-pill pe-1" id="${id}-input"  type="text" placeholder="Replying to @${name}" value="@${name}"><div id="comment-reply-button" class="col-2 p-0"><img src="icons/send_FILL1_wght600_GRAD200_opsz24.svg"/><span id="comment-button-loader" class="d-none" role="status" aria-hidden="true"></span></div>
-        </div>
-    </div>
-</div>
-`;
-    getReply(data, postId);
-  });
-
-  const replyToBtns = document.querySelectorAll(".reply-button");
-  const replyFormConts = document.querySelectorAll(".reply-cont");
-  const postCommentInput = document.getElementById(`${data.id}-input`);
-  replyToBtns.forEach((replyToBtn) => {
-    replyToBtn.addEventListener("click", function () {
-      replyFormConts.forEach((replyFormCont) => {
-        // console.log(replyFormCont.id, replyToBtn.id + "-reply-cont");
-        const replyForm = document.getElementById(replyFormCont.id);
-        if (replyFormCont.id === replyToBtn.id + "-reply-cont") {
-          replyForm.classList.replace("d-none", "d-flex");
-        } else {
-          replyForm.classList.replace("d-flex", "d-none");
-        }
-
-        postCommentInput.addEventListener("click", function () {
-          replyForm.classList.replace("d-flex", "d-none");
-        });
-      });
-      //   console.log(replyInput);
-      const replyToCom = replyToBtn.id;
-      const comRepBtn = document.querySelector("#comment-reply-button");
-      comRepBtn.addEventListener("click", function () {
-        sendComment(replyToCom, data);
-      });
-    });
-  });
-  const comBtn = document.querySelector("#comment-button");
-  comBtn.addEventListener("click", function () {
-    const idToCom = data.id;
-    // console.log(data.id);
-    sendComment(idToCom, data);
-  });
-}
-
-async function sendComment(id, data) {
-  const commentInput = document.getElementById(`${id}-input`);
-  if (commentInput.value) {
-    // console.log(id, commentInput.value);
-    let comBody = "";
-    if (typeof id === "string") {
-      comBody = {
-        body: commentInput.value,
-        replyToId: parseInt(id),
-      };
-    } else {
-      comBody = {
-        body: commentInput.value,
-      };
-    }
-    try {
-      //   console.log(comBody);
-      const res = await fetch(
-        `https://api.noroff.dev/api/v1/social/posts/${data.id}/comment`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`,
-          },
-          body: JSON.stringify(comBody),
-        }
-      );
-      //   console.log(res.json());
-      if (res.ok) {
-        openComment(data.id);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-}
-
-function getReply(data, id) {
-  console.log(data, id);
-  const comReply = data.comments.filter((comments) => {
-    if (comments.replyToId) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  console.log(comReply);
-  if (comReply) {
-    comReply.forEach((reply) => {
-      if (reply.postId === id) {
-        const replyCont = document.getElementById(`${id}-reply`);
-        replyCont.innerHTML += `<div class=" mb-2">
-        <div class="d-flex ">
-            <img class="rounded-circle" style="width:25px;height:25px" src="${reply.author.avatar}"/>
-            <div class="user-header-cont ps-3 flex-grow-1">
-                <h5 class="m-0">${reply.author.name}</h5>
-            </div>
-            <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created :${reply.created}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
-        </div>
-        <div class="d-flex flex-column">
-            <p class="mt-3">${reply.body}</p>
-        </div>
-    </div>`;
-      }
-    });
-  }
 }
