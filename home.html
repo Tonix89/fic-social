@@ -158,7 +158,19 @@
             </form>
         </div>
         <div class="latest-post-cont">
-            <h5 class="post-header">Latest Post</h5>
+            <div class="d-flex justify-content-between">
+                <h5 class="post-header">Latest Post</h5>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle fw-bold" type="button" id="filterPost" data-bs-toggle="dropdown" aria-expanded="false">
+                     Filter
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterPost">
+                      <li><button class="dropdown-item" type="button" id="latest-post">Latest Posts</button></li>
+                      <li><button class="dropdown-item" type="button" id="oldest-post">Oldest Posts</button></li>
+                      <li><button class="dropdown-item" type="button" id="followed-post">Followed</button></li>
+                    </ul>
+                  </div>
+            </div>
             <div class="user-post-cont">
                 <div class
                 ="post-loader d-flex justify-content-center">

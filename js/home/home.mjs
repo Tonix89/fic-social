@@ -18,44 +18,90 @@ logOutBtn.addEventListener("click", function () {
 });
 
 const postCont = document.querySelector(".user-post-cont");
+const postHeader = document.querySelector(".post-header");
 
-const postUrl =
-  "https://api.noroff.dev/api/v1/social/posts?_author=true&_comments=true&_reactions=true";
+let postUrl =
+  "https://api.noroff.dev/api/v1/social/posts?_author=true&_comments=true&_reactions=true&sort=created&sortOrder=desc";
 
-getPost(postUrl, postCont).then((data) => {
-  // console.log(data);
+function callingGetPost(postUrl, postCont) {
+  getPost(postUrl, postCont).then((data) => {
+    console.log(data);
 
-  const tagList = document.querySelector("#tagList");
-  tagsArray(data, tagList);
+    const tagList = document.querySelector("#tagList");
+    tagsArray(data, tagList);
 
-  const tagList2 = document.querySelector("#tagList2");
-  tagsArray(data, tagList2);
+    const tagList2 = document.querySelector("#tagList2");
+    tagsArray(data, tagList2);
 
-  const delBtn = document.querySelectorAll(".del-button");
-  delBtn.forEach((delBtnId) => {
-    goDelete(delBtnId);
-  });
+    const delBtn = document.querySelectorAll(".del-button");
+    delBtn.forEach((delBtnId) => {
+      goDelete(delBtnId);
+    });
 
-  const postInput = document.querySelectorAll(".post-input");
-  const editBtn = document.querySelectorAll(".edit-button");
-  editBtn.forEach((editBtnId) => {
-    gotoedit(postInput, editBtnId);
-  });
+    const postInput = document.querySelectorAll(".post-input");
+    const editBtn = document.querySelectorAll(".edit-button");
+    editBtn.forEach((editBtnId) => {
+      gotoedit(postInput, editBtnId);
+    });
 
-  const likeBtn = document.querySelectorAll(".react-like");
-  likeBtn.forEach((likeBtnId) => {
-    // console.log(likeBtnId.id);
-    hitLike(likeBtnId);
-  });
+    const likeBtn = document.querySelectorAll(".react-like");
+    likeBtn.forEach((likeBtnId) => {
+      // console.log(likeBtnId.id);
+      hitLike(likeBtnId);
+    });
 
-  const commentBtn = document.querySelectorAll(".comment-button");
-  commentBtn.forEach((commentBtnId) => {
-    commentBtnId.addEventListener("click", function () {
-      console.log(commentBtnId.id);
-      const postId = commentBtnId.id.split(".")[0];
-      openComment(postId);
+    const commentBtn = document.querySelectorAll(".comment-button");
+    commentBtn.forEach((commentBtnId) => {
+      commentBtnId.addEventListener("click", function () {
+        // console.log(commentBtnId.id);
+        const postId = commentBtnId.id.split(".")[0];
+        openComment(postId);
+      });
+    });
+
+    const postImgBtn = document.querySelectorAll(".post-img");
+    postImgBtn.forEach((postImgBtnId) => {
+      postImgBtnId.addEventListener("click", function () {
+        // console.log(commentBtnId.id);
+        const postId = postImgBtnId.id.split("*")[0];
+        openComment(postId);
+      });
     });
   });
+}
+callingGetPost(postUrl, postCont);
+
+const oldPostBtn = document.getElementById("oldest-post");
+oldPostBtn.addEventListener("click", function () {
+  postUrl =
+    "https://api.noroff.dev/api/v1/social/posts?_author=true&_comments=true&_reactions=true&sort=created&sortOrder=asc";
+  postCont.innerHTML = `<div class
+    ="post-loader d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>`;
+  postHeader.innerHTML = "Oldest Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+const followPostBtn = document.getElementById("followed-post");
+followPostBtn.addEventListener("click", function () {
+  postUrl =
+    "https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true";
+  postCont.innerHTML = `<div class
+    ="post-loader d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>`;
+  postHeader.innerHTML = "Following Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+const latestPostBtn = document.getElementById("latest-post");
+latestPostBtn.addEventListener("click", function () {
+  location.reload();
 });
 
 const postTitleError = document.querySelector("#postTitleError");
@@ -67,7 +113,6 @@ const searchForm = document.querySelector(".search-form-cont");
 const searchInput = document.querySelector(".search-input");
 const searchForm2 = document.querySelector(".search-form-cont2");
 const searchInput2 = document.querySelector(".search-input2");
-const postHeader = document.querySelector(".post-header");
 const searchBtn = document.querySelector(".search-button");
 const searchBtn2 = document.querySelector(".search-button2");
 
@@ -142,11 +187,15 @@ function getTag(inputValue) {
 
 searchBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  goSearch(searchInput, postCont);
+  if (searchInput.value) {
+    goSearch(searchInput, postCont);
+  }
 });
 
 searchBtn2.addEventListener("click", function (e) {
   e.preventDefault();
-  postHeader.scrollIntoView();
-  goSearch(searchInput2, postCont);
+  if (searchInput2.value) {
+    postHeader.scrollIntoView();
+    goSearch(searchInput2, postCont);
+  }
 });

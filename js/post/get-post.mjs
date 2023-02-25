@@ -21,6 +21,7 @@ export async function getPost(postUrl, postCont) {
       // console.log(data);
       if (data) {
         postLoader.classList.replace("d-flex", "d-none");
+        postCont.innerHTML = "";
 
         data.forEach((post) => {
           // console.log(post);
@@ -81,7 +82,7 @@ export async function getPost(postUrl, postCont) {
               <div class="post-card-body">
                   <h6>${title}</h6>
                   <p class="post-text">${body}</p>
-                  <img src="${mediaUrl}">
+                  <img class="post-img" src="${mediaUrl}" data-bs-toggle="modal" data-bs-target="#comment" id="${id}*${id}">
                   <div class="post-buttons ">
                       <div class="position-relative">${likeCont}</div>
                       <div class="position-relative" data-bs-toggle="modal" data-bs-target="#comment"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}com-counter">${comments}</span></div>

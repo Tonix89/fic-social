@@ -16,8 +16,6 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
 
   getPost(searchUrl, postCont).then((data) => {
     const postInput = document.querySelectorAll(".post-input");
-    const postLoader = document.querySelector(".post-loader");
-    postLoader.classList.replace("d-flex", "d-none");
     postHeader.innerHTML = `Search Results for "${searchInput}"`;
 
     // console.log(data);

@@ -1,12 +1,19 @@
 import { getPostDetails } from "../post/post-details.mjs";
 import { countsLike } from "../post/like.mjs";
 import { isItLiked } from "../post/liked-post.mjs";
+import { hitLike } from "../post/like.mjs";
 import { user } from "../logout/authorize.mjs";
 import { getComments } from "./get-comments.mjs";
 
 export function openComment(id) {
   getPostDetails(id).then((data) => {
     const commentCont = document.querySelector(".comment-container");
+    commentCont.innerHTML = `<div class
+    ="post-loader d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>`;
     console.log(data);
     const {
       id,
@@ -55,9 +62,9 @@ export function openComment(id) {
       userAvatar = `<img class="rounded-circle" style="width:25px;height:25px" src="${avatar}">`;
     }
 
-    commentCont.innerHTML = `<div class="comment-cont-div">
-                            <div class=" d-flex" id="comment-img-cont"><img class="w-100 mh-100" src="${mediaUrl}"/></div>
-                            <div class="col-md-4 comment-card" >
+    commentCont.innerHTML = `<div class="comment-cont-div align-items-center">
+                            <div class=" d-flex justify-content-center border-end" id="comment-img-cont"><img class="w-auto mw-100 h-auto" src="${mediaUrl}"/></div>
+                            <div class="col-md-4 comment-card border-start" >
                                     <div class="card-header">
                                         <div class="d-flex align-items-center">
                                             ${userAvatar}
@@ -67,7 +74,7 @@ export function openComment(id) {
                                             <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
                                         </div>
                                     </div>
-                                    <ul class="list-group list-group-flush ">
+                                    <ul class="list-group list-group-flush">
                                         <li class="list-group-item d-flex flex-column flex-grow-1">
                                             <h6>${title}</h6>
                                             <p class="card-text">${body}</p>
@@ -86,6 +93,13 @@ export function openComment(id) {
                                     </ul>
                             </div>
     </div>`;
+
+    const likeBtn = document.querySelectorAll(".react-like");
+    likeBtn.forEach((likeBtnId) => {
+      // console.log(likeBtnId.id);
+      hitLike(likeBtnId);
+    });
+
     const comCard = document.querySelector(".comment-card");
     const imgCont = document.querySelector("#comment-img-cont");
     const comModDial = document.querySelector("#comment-modal-dialog");

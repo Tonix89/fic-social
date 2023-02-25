@@ -39,6 +39,7 @@ export function getComments(data, commentCard) {
     replyToBtn.addEventListener("click", function () {
       postCommentInput.value = repAuthor;
       //   console.log(repBtnId, repAuthor);
+      postCommentInput.scrollIntoView();
       repToCom = repBtnId;
     });
   });

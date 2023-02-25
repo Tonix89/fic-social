@@ -117,37 +117,80 @@ const searchBtn = document.querySelector(".search-button");
 const searchBtn2 = document.querySelector(".search-button2");
 
 const postCont = document.querySelector(".user-post-cont");
-const postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true`;
+let postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true`;
 
-getPost(postUrl, postCont).then((data) => {
-  // console.log(data);
-  const tagList = document.querySelector("#tagList");
-  tagsArray(data, tagList);
+function callingGetPost(postUrl, postCont) {
+  getPost(postUrl, postCont).then((data) => {
+    // console.log(data);
+    const tagList = document.querySelector("#tagList");
+    tagsArray(data, tagList);
 
-  const tagList2 = document.querySelector("#tagList2");
-  tagsArray(data, tagList2);
-  const delBtn = document.querySelectorAll(".del-button");
-  delBtn.forEach((delBtnId) => {
-    goDelete(delBtnId);
-  });
-  const editBtn = document.querySelectorAll(".edit-button");
-  editBtn.forEach((editBtnId) => {
-    gotoedit(postInput, editBtnId);
-  });
-  const likeBtn = document.querySelectorAll(".react-like");
-  likeBtn.forEach((likeBtnId) => {
-    // console.log(likeBtnId.id);
-    hitLike(likeBtnId);
-  });
+    const tagList2 = document.querySelector("#tagList2");
+    tagsArray(data, tagList2);
+    const delBtn = document.querySelectorAll(".del-button");
+    delBtn.forEach((delBtnId) => {
+      goDelete(delBtnId);
+    });
+    const editBtn = document.querySelectorAll(".edit-button");
+    editBtn.forEach((editBtnId) => {
+      gotoedit(postInput, editBtnId);
+    });
+    const likeBtn = document.querySelectorAll(".react-like");
+    likeBtn.forEach((likeBtnId) => {
+      // console.log(likeBtnId.id);
+      hitLike(likeBtnId);
+    });
 
-  const commentBtn = document.querySelectorAll(".comment-button");
-  commentBtn.forEach((commentBtnId) => {
-    commentBtnId.addEventListener("click", function () {
-      console.log(commentBtnId.id);
-      const postId = commentBtnId.id.split(".")[0];
-      openComment(postId);
+    const commentBtn = document.querySelectorAll(".comment-button");
+    commentBtn.forEach((commentBtnId) => {
+      commentBtnId.addEventListener("click", function () {
+        console.log(commentBtnId.id);
+        const postId = commentBtnId.id.split(".")[0];
+        openComment(postId);
+      });
+    });
+
+    const postImgBtn = document.querySelectorAll(".post-img");
+    postImgBtn.forEach((postImgBtnId) => {
+      postImgBtnId.addEventListener("click", function () {
+        // console.log(commentBtnId.id);
+        const postId = postImgBtnId.id.split("*")[0];
+        openComment(postId);
+      });
     });
   });
+}
+callingGetPost(postUrl, postCont);
+
+const oldPostBtn = document.getElementById("oldest-post");
+oldPostBtn.addEventListener("click", function () {
+  postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true&sort=created&sortOrder=asc`;
+  postCont.innerHTML = `<div class
+    ="post-loader d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>`;
+  postHeader.innerHTML = "Oldest Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+const followPostBtn = document.getElementById("followed-post");
+followPostBtn.addEventListener("click", function () {
+  postUrl = `https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true`;
+  postCont.innerHTML = `<div class
+    ="post-loader d-flex justify-content-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+    </div>`;
+  postHeader.innerHTML = "Following Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+const latestPostBtn = document.getElementById("latest-post");
+latestPostBtn.addEventListener("click", function () {
+  location.reload();
 });
 
 searchForm.addEventListener("mouseover", function () {
