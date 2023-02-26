@@ -6,6 +6,8 @@ import { user } from "../logout/authorize.mjs";
 import { countsLike } from "../post/like.mjs";
 import { isItLiked } from "../post/liked-post.mjs";
 import { openComment } from "../comment/comments.mjs";
+import { getFollowing } from "../follow/follow.mjs";
+import { followUser } from "../follow/follow-user.mjs";
 
 export function idSearch(numToString, postCont) {
   postCont.innerHTML = `<div class
@@ -81,11 +83,14 @@ export function idSearch(numToString, postCont) {
                   <div class="user-header-cont flex-grow-1">
                       <h5>${name}</h5>
                   </div>
-                  <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
+                  <button class="follow-button btn p-0 text-muted m-0 fw-bold" id="${name}" style="font-size:12px;">Follow</button>
               </div>
           </div>
           <div class="post-card-body">
-              <h6>${title}</h6>
+              <div class="d-flex align-items-center">
+                <h6 class="m-0">${title}</h6>
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
+              </div>
               <p class="post-text">${body}</p>
               <img src="${mediaUrl}">
               <div class="post-buttons ">
@@ -133,6 +138,48 @@ export function idSearch(numToString, postCont) {
           console.log(commentBtnId.id);
           const postId = commentBtnId.id.split(".")[0];
           openComment(postId);
+        });
+      });
+
+      const followBtns = document.querySelectorAll(".follow-button");
+      function followInfo(followBtns) {
+        getFollowing().then((data) => {
+          console.log(data);
+          if (data.following.length !== 0) {
+            const followings = data.following;
+            followings.forEach((following) => {
+              const followBtns = document.querySelectorAll(
+                `#${following.name}`
+              );
+              console.log(followBtns);
+              if (followBtns.length !== 0) {
+                followBtns.forEach((followBtn) => {
+                  followBtn.innerHTML = "Followed";
+                });
+              }
+            });
+          } else {
+            followBtns.forEach((followBtn) => {
+              followBtn.innerHTML = "Follow";
+            });
+          }
+        });
+      }
+      followInfo(followBtns);
+
+      followBtns.forEach((followBtn) => {
+        followBtn.addEventListener("click", function () {
+          let follow = `${followBtn.id}/follow`;
+          if (followBtn.innerHTML === "Followed") {
+            follow = `${followBtn.id}/unfollow`;
+            followBtn.innerHTML = "Follow";
+          }
+          followUser(follow).then((data) => {
+            console.log(data);
+            if (data) {
+              followInfo(followBtns);
+            }
+          });
         });
       });
     }

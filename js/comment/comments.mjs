@@ -14,7 +14,7 @@ export function openComment(id) {
             <span class="visually-hidden">Loading...</span>
           </div>
     </div>`;
-    console.log(data);
+    // console.log(data);
     const {
       id,
       title,
@@ -62,7 +62,7 @@ export function openComment(id) {
       userAvatar = `<img class="rounded-circle" style="width:25px;height:25px" src="${avatar}">`;
     }
 
-    commentCont.innerHTML = `<div class="comment-cont-div align-items-center">
+    commentCont.innerHTML = `<div class="comment-cont-div">
                             <div class=" d-flex justify-content-center border-end" id="comment-img-cont"><img class="w-auto mw-100 h-auto" src="${mediaUrl}"/></div>
                             <div class="col-md-4 comment-card border-start" >
                                     <div class="card-header">

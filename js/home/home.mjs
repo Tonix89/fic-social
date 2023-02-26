@@ -8,6 +8,9 @@ import { goDelete } from "../post/delete-post.mjs";
 import { hitLike } from "../post/like.mjs";
 import { goSearch } from "../search/search-button/button1.mjs";
 import { openComment } from "../comment/comments.mjs";
+import { getFollowing } from "../follow/follow.mjs";
+import { followUser } from "../follow/follow-user.mjs";
+import { getContact } from "../contact/contact.mjs";
 
 deleteEditParam();
 
@@ -25,7 +28,7 @@ let postUrl =
 
 function callingGetPost(postUrl, postCont) {
   getPost(postUrl, postCont).then((data) => {
-    console.log(data);
+    // console.log(data);
 
     const tagList = document.querySelector("#tagList");
     tagsArray(data, tagList);
@@ -65,6 +68,47 @@ function callingGetPost(postUrl, postCont) {
         // console.log(commentBtnId.id);
         const postId = postImgBtnId.id.split("*")[0];
         openComment(postId);
+      });
+    });
+
+    const followBtns = document.querySelectorAll(".follow-button");
+    function followInfo(followBtns) {
+      getFollowing().then((data) => {
+        // console.log(data);
+        if (data.following.length !== 0) {
+          const followings = data.following;
+          followings.forEach((following) => {
+            const followBtns = document.querySelectorAll(`#${following.name}`);
+            // console.log(followBtns);
+            if (followBtns.length !== 0) {
+              followBtns.forEach((followBtn) => {
+                followBtn.innerHTML = "Followed";
+              });
+            }
+          });
+        } else {
+          followBtns.forEach((followBtn) => {
+            followBtn.innerHTML = "Follow";
+          });
+        }
+        getContact(data.following);
+      });
+    }
+    followInfo(followBtns);
+
+    followBtns.forEach((followBtn) => {
+      followBtn.addEventListener("click", function () {
+        let follow = `${followBtn.id}/follow`;
+        if (followBtn.innerHTML === "Followed") {
+          follow = `${followBtn.id}/unfollow`;
+          followBtn.innerHTML = "Follow";
+        }
+        followUser(follow).then((data) => {
+          // console.log(data);
+          if (data) {
+            followInfo(followBtns);
+          }
+        });
       });
     });
   });

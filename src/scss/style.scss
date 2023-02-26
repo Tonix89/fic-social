@@ -337,6 +337,12 @@ main{
                     & .profile-img-cont{
                         @extend .d-flex, .justify-content-between, .align-items-center;
 
+                        & img{
+                            @extend .rounded-circle;
+                            width: variables.$w-30px;
+                            height: variables.$w-30px;
+                        }
+
                         & .profile-header-cont{
                             @extend .ps-3;
 
@@ -361,6 +367,12 @@ main{
 
                     & li{
                         @extend .p-1;
+
+                        & img{
+                            @extend .rounded-circle;
+                            width: variables.$w-30px;
+                            height: variables.$w-30px;
+                        }
 
                         & .contact-profile-cont{
                             @extend .d-flex, .align-items-center, .ps-2;
@@ -464,8 +476,8 @@ main{
 
                         & img{
                             @extend .rounded-circle;
-                            width: variables.$w-25px;
-                            height: variables.$w-25px;
+                            width: variables.$w-30px;
+                            height: variables.$w-30px;
                         }
 
                         & .user-header-cont{
@@ -506,6 +518,12 @@ main{
 
             & .contact-profile-cont{
                 @extend .d-flex, .align-items-center, .p-2;
+
+                & img{
+                    @extend .rounded-circle;
+                            width: variables.$w-30px;
+                            height: variables.$w-30px;
+                }
 
                 & .contact-header-cont{
                     @extend .ps-3;
@@ -609,6 +627,12 @@ main{
 
                 & .contact-profile-cont{
                     @extend .d-flex, .align-items-center, .p-2;
+
+                    & img{
+                        @extend .rounded-circle;
+                        width: variables.$w-25px;
+                        height: variables.$w-25px;
+                    }
 
                     & .profile-header-cont{
                         @extend .ps-3;
@@ -782,7 +806,7 @@ main{
                 }
 
                 & .post-card-body{
-                    @extend .card-body, .d-flex, .flex-column;
+                    @extend .card-body, .d-flex, .flex-column, .position-relative;
 
                     & .post-text{
                         @extend .card-text;

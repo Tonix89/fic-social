@@ -74,7 +74,7 @@ export function countsLike(reactions) {
     likes = likeSymbol[0].count;
   }
   //console.log(likes, unlikes);
-  const totalLikes = likes - unlikes;
+  let totalLikes = likes - unlikes;
   if (totalLikes < 0) {
     totalLikes = 0;
   }
