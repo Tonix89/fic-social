@@ -1,52 +1,26 @@
+import { following } from "./following.mjs";
 export function getContact(data) {
-  console.log(data);
-  const contactCont = document.querySelector(".contacts-cont");
-  const contactCont2 = document.querySelector("#contacts-cont");
-  const contactSmCont = document.querySelector(".contacts-sm");
-  const contactSmBtn = document.querySelector(".contacts-sm-button");
-  contactCont.innerHTML = "";
-  if (contactCont2) {
-    contactCont2.innerHTML = "";
-  }
-  if (contactSmCont) {
-    contactSmCont.innerHTML = "";
-  }
-  if (data.length === 0) {
-    contactCont.innerHTML = "You followed No One.";
-  } else {
-    data.forEach((info, i) => {
-      const { name, avatar } = info;
-      contactCont.innerHTML += `<div class="contact-profile-cont">
-    <img src="${avatar}">
-    <div class="contact-header-cont">
-        <h5>${name}</h5>
-    </div>
-</div>`;
-      if (contactCont2) {
-        contactCont2.innerHTML += `<div class="contact-profile-cont">
-    <img src="${avatar}">
-    <div class="contact-header-cont ms-2">
-        <h5>${name}</h5>
-    </div>
-</div>`;
-      }
-      if (contactSmBtn) {
-        if (i !== 0) {
-          contactSmCont.innerHTML += `<li><div class="contact-profile-cont">
-    <img src="${avatar}">
-    <div class="contact-header-cont ms-2">
-        <h5>${name}</h5>
-    </div>
-</div></li>`;
-        } else {
-          contactSmBtn.innerHTML = `<div class="profile-img-cont">
-    <img src="${avatar}">
-    <div class="profile-header-cont">
-        <h5>${name}</h5>
-    </div>
-</div>`;
-        }
+  //   console.log(data.following, data.followers);
+  const followers = data.followers;
+  const followings = data.following;
+  const set = { follower: true };
+  const set1 = { following: true };
+
+  followings.forEach((follow) => {
+    followers.forEach((follower) => {
+      if (follow.name !== follower.name) {
+        follower = Object.assign(follower, set);
+      } else {
+        follow = Object.assign(follower, set1);
       }
     });
-  }
+  });
+
+  const newFollowingArray = followings.filter(
+    (follow) => !followers.some((follower) => follower.name === follow.name)
+  );
+  //   console.log(followers, newFollowingArray);
+  const newDataArray = [...newFollowingArray, ...followers];
+  //   console.log(newDataArray);
+  following(newDataArray);
 }

@@ -73,7 +73,7 @@ postBtn.addEventListener("click", function (e) {
     });
   }
 
-  console.log(postId);
+  // console.log(postId);
   getBodyData(
     postInput,
     postTitleError,
@@ -108,7 +108,7 @@ postBtnSm.addEventListener("click", function (e) {
     });
   }
 
-  console.log(postId);
+  // console.log(postId);
   getBodyData(
     postInputSm,
     postTitleErrorSm,
@@ -155,7 +155,7 @@ function callingGetPost(postUrl, postCont) {
     const commentBtn = document.querySelectorAll(".comment-button");
     commentBtn.forEach((commentBtnId) => {
       commentBtnId.addEventListener("click", function () {
-        console.log(commentBtnId.id);
+        // console.log(commentBtnId.id);
         const postId = commentBtnId.id.split(".")[0];
         openComment(postId);
       });
@@ -190,7 +190,7 @@ function callingGetPost(postUrl, postCont) {
             followBtn.innerHTML = "Follow";
           });
         }
-        getContact(data.following);
+        getContact(data);
       });
     }
     followInfo(followBtns);
@@ -208,6 +208,16 @@ function callingGetPost(postUrl, postCont) {
             followInfo(followBtns);
           }
         });
+      });
+    });
+
+    const userImage = document.querySelectorAll(".user-image");
+    userImage.forEach((userImg) => {
+      userImg.addEventListener("click", function () {
+        const userImgModal = document.querySelector(".user-image-container");
+        // console.log(userImg.src);
+        userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
+        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
       });
     });
   });

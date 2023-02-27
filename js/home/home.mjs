@@ -75,6 +75,7 @@ function callingGetPost(postUrl, postCont) {
     function followInfo(followBtns) {
       getFollowing().then((data) => {
         // console.log(data);
+        getContact(data);
         if (data.following.length !== 0) {
           const followings = data.following;
           followings.forEach((following) => {
@@ -91,7 +92,6 @@ function callingGetPost(postUrl, postCont) {
             followBtn.innerHTML = "Follow";
           });
         }
-        getContact(data.following);
       });
     }
     followInfo(followBtns);
@@ -109,6 +109,16 @@ function callingGetPost(postUrl, postCont) {
             followInfo(followBtns);
           }
         });
+      });
+    });
+
+    const userImage = document.querySelectorAll(".user-image");
+    userImage.forEach((userImg) => {
+      userImg.addEventListener("click", function () {
+        const userImgModal = document.querySelector(".user-image-container");
+        // console.log(userImg.src);
+        userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
+        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
       });
     });
   });

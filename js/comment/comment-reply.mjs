@@ -1,5 +1,5 @@
 export function getReply(data, id) {
-  console.log(data, id);
+  //   console.log(data, id);
   const comReply = data.comments.filter((comments) => {
     if (comments.replyToId) {
       return true;
@@ -7,7 +7,7 @@ export function getReply(data, id) {
       return false;
     }
   });
-  console.log(comReply);
+  //   console.log(comReply);
   if (comReply) {
     comReply.forEach((reply) => {
       if (reply.replyToId === id) {

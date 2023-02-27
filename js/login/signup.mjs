@@ -48,7 +48,7 @@ export function signUp(noroffBaseUrl, e) {
     };
 
     submitRegistration(bodyData, noroffBaseUrl).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.errors) {
         document.querySelector(
           "#signupError"

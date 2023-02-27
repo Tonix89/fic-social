@@ -59,7 +59,7 @@ export function openComment(id) {
       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
       </svg>`;
     if (avatar) {
-      userAvatar = `<img class="rounded-circle" style="width:25px;height:25px" src="${avatar}">`;
+      userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image rounded-circle btn p-0" style="width:25px;height:25px" src="${avatar}">`;
     }
 
     commentCont.innerHTML = `<div class="comment-cont-div">
@@ -114,5 +114,15 @@ export function openComment(id) {
     }
     const commentCard = document.querySelector(".comments-card");
     getComments(data, commentCard);
+
+    const userImage = document.querySelectorAll(".user-image");
+    userImage.forEach((userImg) => {
+      userImg.addEventListener("click", function () {
+        const userImgModal = document.querySelector(".user-image-container");
+        // console.log(userImg.src);
+        userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
+        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
+      });
+    });
   });
 }

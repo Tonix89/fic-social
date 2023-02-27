@@ -4,7 +4,7 @@ export function goDelete(delBtnId) {
     delBtnId.style.display = "none";
   }
   delBtnId.addEventListener("click", function () {
-    console.log(delBtnId.id);
+    // console.log(delBtnId.id);
     const confirmDelete = "Are you sure you want to delete this post?";
     if (confirm(confirmDelete)) {
       deletePost(delBtnId.id);
@@ -25,7 +25,7 @@ function deletePost(postId) {
       }
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data) {
         location.reload();
       }

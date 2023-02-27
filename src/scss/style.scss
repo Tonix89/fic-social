@@ -363,6 +363,8 @@ main{
                 }
 
                 & ul{
+                    @extend .overflow-auto;
+                    max-height: 50vh;
                     inset: variables.$dropdown-custom-inset!important;
 
                     & li{
@@ -514,7 +516,8 @@ main{
         @extend .container-fluid, .d-none, .d-md-block;
 
         & .contacts-cont{
-            @extend .border, .border-1, .rounded-2;
+            @extend .border, .border-1, .rounded-2, .overflow-auto;
+            max-height: 80vh;
 
             & .contact-profile-cont{
                 @extend .d-flex, .align-items-center, .p-2;
@@ -623,7 +626,8 @@ main{
             }
 
             & .contact-card-body{
-                @extend .card-body;
+                @extend .card-body, .text-start, .overflow-auto;
+                max-height: 50vh;
 
                 & .contact-profile-cont{
                     @extend .d-flex, .align-items-center, .p-2;
@@ -828,7 +832,8 @@ main{
         @extend .container-fluid, .d-none, .d-md-block;
 
         & .contacts-cont{
-            @extend .border, .border-1, .rounded-2;
+            @extend .border, .border-1, .rounded-2, .overflow-auto;
+            max-height: 80vh;
 
             & .contact-profile-cont{
                 @extend .d-flex, .align-items-center, .p-2;

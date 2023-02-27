@@ -5,6 +5,7 @@ import { hitLike } from "../post/like.mjs";
 import { openComment } from "../comment/comments.mjs";
 import { getFollowing } from "../follow/follow.mjs";
 import { followUser } from "../follow/follow-user.mjs";
+import { getContact } from "../contact/contact.mjs";
 
 export function tagUserSearch(searchInput, searchUrl, postCont) {
   postCont.innerHTML = `<div class
@@ -65,7 +66,7 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
     const commentBtn = document.querySelectorAll(".comment-button");
     commentBtn.forEach((commentBtnId) => {
       commentBtnId.addEventListener("click", function () {
-        console.log(commentBtnId.id);
+        // console.log(commentBtnId.id);
         const postId = commentBtnId.id.split(".")[0];
         openComment(postId);
       });
@@ -74,12 +75,13 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
     const followBtns = document.querySelectorAll(".follow-button");
     function followInfo(followBtns) {
       getFollowing().then((data) => {
-        console.log(data);
+        // console.log(data);
+        getContact(data);
         if (data.following.length !== 0) {
           const followings = data.following;
           followings.forEach((following) => {
             const followBtns = document.querySelectorAll(`#${following.name}`);
-            console.log(followBtns);
+            // console.log(followBtns);
             if (followBtns.length !== 0) {
               followBtns.forEach((followBtn) => {
                 followBtn.innerHTML = "Followed";
@@ -103,7 +105,7 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
           followBtn.innerHTML = "Follow";
         }
         followUser(follow).then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data) {
             followInfo(followBtns);
           }

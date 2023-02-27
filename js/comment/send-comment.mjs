@@ -3,7 +3,7 @@ import { openComment } from "./comments.mjs";
 export async function sendComment(id, data) {
   const commentInput = document.getElementById(`${data.id}-input`);
   if (commentInput.value) {
-    console.log(typeof id, id);
+    // console.log(typeof id, id);
     let comBody = "";
     if (typeof id === "string") {
       comBody = {

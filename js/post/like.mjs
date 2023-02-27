@@ -3,7 +3,7 @@ import { getPostDetails } from "./post-details.mjs";
 
 export function hitLike(reactBtn) {
   reactBtn.addEventListener("click", function () {
-    console.log(reactBtn.id);
+    // console.log(reactBtn.id);
     const postId = reactBtn.id.split("/")[0];
     const likedStatus = reactBtn.id.split("/")[1];
     let symbol = "👎";
@@ -32,7 +32,7 @@ export function hitLike(reactBtn) {
         if (res.ok) {
           return res.json();
         } else {
-          console.log(res);
+          //   console.log(res);
         }
       })
       .then((data) => {
@@ -86,7 +86,7 @@ function saveLikedPost(data) {
   let likePostArray = [];
   if (likedPost) {
     likePostArray = likedPost.split(",");
-    console.log(likePostArray);
+    // console.log(likePostArray);
   }
   if (data.symbol === "👍") {
     likePostArray.push(data.postId);

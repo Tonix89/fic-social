@@ -70,12 +70,12 @@ export async function getPost(postUrl, postCont) {
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
           </svg>`;
           if (avatar) {
-            userAvatar = `<img src="${avatar}">`;
+            userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}">`;
           }
           postCont.innerHTML += `<div class="post-card">
               <div class="post-card-header">
                   <div class="user-cont">
-                  ${userAvatar}
+                      ${userAvatar}
                       <div class="user-header-cont flex-grow-1">
                           <h5>${name}</h5>
                       </div>

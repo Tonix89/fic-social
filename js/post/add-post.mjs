@@ -76,7 +76,7 @@ function addPost(postData, postError, postLoader, postId) {
       body: JSON.stringify(postData),
     };
   }
-  console.log(url, bodyData);
+  // console.log(url, bodyData);
   fetch(url, bodyData)
     .then((response) => {
       console.log(response);
@@ -85,7 +85,7 @@ function addPost(postData, postError, postLoader, postId) {
       }
     })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.id) {
         postLoader.classList.replace("d-inline-block", "d-none");
         if (postId) {
