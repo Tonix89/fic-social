@@ -58,9 +58,12 @@ export async function getPost(postUrl, postCont) {
           }
           let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png">`;
           let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png">`;
+          let followButtons = `<button class="follow-button btn p-0 text-muted m-0 fw-bold" id="${name}" style="font-size:12px;">Follow</button>`;
           if (user !== name) {
             editIcon = "";
             delIcon = "";
+          } else {
+            followButtons = "";
           }
           let userAvatar = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -76,7 +79,7 @@ export async function getPost(postUrl, postCont) {
                       <div class="user-header-cont flex-grow-1">
                           <h5>${name}</h5>
                       </div>
-                      <button class="follow-button btn p-0 text-muted m-0 fw-bold" id="${name}" style="font-size:12px;">Follow</button>
+                      ${followButtons}
                   </div>
               </div>
               <div class="post-card-body">
