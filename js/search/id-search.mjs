@@ -50,9 +50,9 @@ export function idSearch(numToString, postCont) {
       // console.log(liked);
       let likeCont = "";
       if (liked && liked[0] == id) {
-        likeCont = `<img class="position-relative react-like" id="${id}/liked" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg"> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+        likeCont = `<img class="position-relative react-like" id="${id}/liked" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg" alt="liked icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
       } else {
-        likeCont = `<img class="position-relative react-like" id="${id}/${id}" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png"> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+        likeCont = `<img class="position-relative react-like" id="${id}/${id}" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png" alt="like icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
       }
       const { comments } = _count;
       const { name, avatar } = author;
@@ -64,8 +64,8 @@ export function idSearch(numToString, postCont) {
       if (!media) {
         mediaUrl = "";
       }
-      let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png">`;
-      let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png">`;
+      let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png" alt="edit icon" />`;
+      let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png" alt="delete icon" />`;
       if (user !== name) {
         editIcon = "";
         delIcon = "";
@@ -75,7 +75,7 @@ export function idSearch(numToString, postCont) {
       <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
       </svg>`;
       if (avatar) {
-        userAvatar = `<img src="${avatar}">`;
+        userAvatar = `<img src="${avatar}" alt="user profile image" />`;
       }
       postCont.innerHTML += `<div class="post-card">
           <div class="post-card-header">
@@ -90,13 +90,13 @@ export function idSearch(numToString, postCont) {
           <div class="post-card-body">
               <div class="d-flex align-items-center">
                 <h6 class="m-0">${title}</h6>
-                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png" alt="calendar icon" /></div>
               </div>
               <p class="post-text">${body}</p>
               <img src="${mediaUrl}">
               <div class="post-buttons ">
                   <div class="position-relative">${likeCont}</div>
-                  <div class="position-relative"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">${comments}</span></div>
+                  <div class="position-relative"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png" alt="comment icon" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">${comments}</span></div>
                   <div class="del-button" id="${id}">${delIcon}</div>
                   <div class="edit-button" id="${id}-${id}">${editIcon}</div>
               </div>

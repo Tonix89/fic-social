@@ -217,7 +217,7 @@ function callingGetPost(postUrl, postCont) {
         const userImgModal = document.querySelector(".user-image-container");
         // console.log(userImg.src);
         userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
-        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
+        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"  /></div>`;
       });
     });
   });

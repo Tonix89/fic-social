@@ -42,9 +42,9 @@ export async function getPost(postUrl, postCont) {
           // console.log(liked);
           let likeCont = "";
           if (liked && liked[0] == id) {
-            likeCont = `<img class="position-relative react-like" id="${id}/liked" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg"> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+            likeCont = `<img class="position-relative react-like" id="${id}/liked" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg" alt="liked icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
           } else {
-            likeCont = `<img class="position-relative react-like" id="${id}/${id}" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png"> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+            likeCont = `<img class="position-relative react-like" id="${id}/${id}" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png" alt="like icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
           }
           const { comments } = _count;
           const { name, avatar } = author;
@@ -56,8 +56,8 @@ export async function getPost(postUrl, postCont) {
           if (!media) {
             mediaUrl = "";
           }
-          let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png">`;
-          let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png">`;
+          let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png" alt="edit icon" />`;
+          let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png" alt="delete icon" />`;
           let followButtons = `<button class="follow-button btn p-0 text-muted m-0 fw-bold" id="${name}" style="font-size:12px;">Follow</button>`;
           if (user !== name) {
             editIcon = "";
@@ -70,7 +70,7 @@ export async function getPost(postUrl, postCont) {
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
           </svg>`;
           if (avatar) {
-            userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}">`;
+            userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}" alt="user profile image" />`;
           }
           postCont.innerHTML += `<div class="post-card">
               <div class="post-card-header">
@@ -85,13 +85,13 @@ export async function getPost(postUrl, postCont) {
               <div class="post-card-body">
                   <div class="d-flex align-items-center">
                     <h6 class="m-0">${title}</h6>
-                    <div class="ms-1"  data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
+                    <div class="ms-1"  data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png" alt="calendar icon" /></div>
                   </div>
                   <p class="post-text">${body}</p>
                   <img class="post-img" src="${mediaUrl}" data-bs-toggle="modal" data-bs-target="#comment" id="${id}*${id}">
                   <div class="post-buttons ">
                       <div class="position-relative">${likeCont}</div>
-                      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#comment"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}com-counter">${comments}</span></div>
+                      <div class="position-relative" data-bs-toggle="modal" data-bs-target="#comment"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png" alt="comment icon" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}com-counter">${comments}</span></div>
                       <div class="del-button" id="${id}">${delIcon}</div>
                       <div class="edit-button" id="${id}-${id}">${editIcon}</div>
                   </div>

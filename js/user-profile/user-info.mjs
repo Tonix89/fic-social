@@ -16,9 +16,9 @@ export function getUserInfo(auth, user) {
         }
         nameOfUser.innerHTML = `<h4>${res.name}</h4>`;
         if (res.avatar) {
-          userPic.innerHTML = `<img src="${res.avatar}">`;
+          userPic.innerHTML = `<img src="${res.avatar}" alt="user profile image" />`;
         } else {
-          userPic.innerHTML = `<img src="images/profile-icon.png">`;
+          userPic.innerHTML = `<img src="images/profile-icon.png" alt="user profile image" />`;
         }
       }
     })

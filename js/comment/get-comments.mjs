@@ -14,11 +14,11 @@ export function getComments(data, commentCard) {
     const { name, email, avatar, banner } = author;
     commentCard.innerHTML += `<div class="border-bottom mb-2">
       <div class="d-flex ">
-          <img class="rounded-circle" style="width:25px;height:25px" src="${avatar}"/>
+          <img class="rounded-circle" style="width:25px;height:25px" src="${avatar}" alt="user profile image" />
           <div class="user-header-cont ps-3 flex-grow-1">
               <h5 class="m-0">${name}</h5>
           </div>
-          <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created :${created}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png"></div>
+          <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created :${created}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png" alt="calendar icon" /></div>
       </div>
       <div class="d-flex flex-column">
           <p class="mt-3 bg-light p-2">${body}</p>

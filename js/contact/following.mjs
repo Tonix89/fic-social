@@ -26,7 +26,7 @@ export function following(data) {
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
           </svg>`;
       if (avatar) {
-        userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}">`;
+        userAvatar = `<img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}" alt="user profile image" />`;
       }
       contactCont.innerHTML += `<div class="contact-profile-cont">
     ${userAvatar}
@@ -71,10 +71,10 @@ export function following(data) {
           //   console.log(userImg.src);
           if (window.innerWidth > 768) {
             userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
-        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
+        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"/></div>`;
           } else {
             userImgModal.innerHTML = `<div class="d-flex justify-content-center">
-        <img class="mh-100 mw-100" src="${userImg.src}"/></div>`;
+        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"/></div>`;
           }
         });
       });

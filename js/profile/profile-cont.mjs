@@ -8,7 +8,7 @@ export function profileCard(userData) {
   const { followers, following, posts } = userData._count;
   // console.log(followers, following, posts);
   if (avatar) {
-    userPic.innerHTML = `<img data-bs-toggle="modal" data-bs-target="#user-image" class="avatar position-relative user-image btn p-0" src="${avatar}"><span class="position-absolute top-100 update-icon translate-middle btn" ><img class="edit-profile-button d-flex" src="icons/edit_square_FILL0_wght600_GRAD-25_opsz20.png" data-bs-toggle="modal" data-bs-target="#changePicture"/></span>`;
+    userPic.innerHTML = `<img data-bs-toggle="modal" data-bs-target="#user-image" class="avatar position-relative user-image btn p-0" src="${avatar}" alt="user profile image" /><span class="position-absolute top-100 update-icon translate-middle btn" ><img class="edit-profile-button d-flex" src="icons/edit_square_FILL0_wght600_GRAD-25_opsz20.png" data-bs-toggle="modal" data-bs-target="#changePicture"/></span>`;
   } else {
     userPic.innerHTML = `<svg class="position-relative" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
