@@ -17,3 +17,5 @@ FIC Social is social media website built for my CSS frameworks course assignment
 - [Bootstrap](https://getbootstrap.com)
 - [Sass](https://sass-lang.com)
 
+## Development Process
+-[Trello Board](https://trello.com/invite/b/IZdDaKVv/ATTI98c77c30a6eb8ab03eb17f97e4d7d23687684F94/javascript-2-ca)
