@@ -279,6 +279,7 @@ main{
             & .user-profile-pic img{
                 @extend .rounded-circle, .bg-white;
                 width: variables.$w-50px;
+                height: variables.$w-50px;
             }
 
             & .profile-menu{
@@ -606,6 +607,7 @@ main{
                 & .avatar{
                     @extend .rounded-circle;
                 width: variables.$w-100px;
+                height: variables.$w-100px;
                 }
 
                 & .update-icon{
