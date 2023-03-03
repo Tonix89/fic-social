@@ -33,7 +33,7 @@ let postUrl =
 
 export function callingGetPost(postUrl, postCont) {
   getPost(postUrl, postCont).then((data) => {
-    // console.log(data);
+    console.log(data);
 
     createTagArray(data);
 

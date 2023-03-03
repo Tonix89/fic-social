@@ -5,12 +5,14 @@
 export function postMedia() {
   const postImgs = document.querySelectorAll(".post-img");
   postImgs.forEach((postImg) => {
-    postImg.addEventListener("error", function () {
-      const text = document.createElement("p");
-      text.classList.add("m-0", "text-danger", "fw-bold");
-      text.textContent =
-        "The media url is either broken or not accessible publicly.";
-      postImg.parentNode.insertBefore(text, postImg);
-    });
+    if (postImg.src !== "") {
+      postImg.addEventListener("error", function () {
+        const text = document.createElement("p");
+        text.classList.add("m-0", "text-danger", "fw-bold");
+        text.textContent =
+          "The media url is either broken or not accessible publicly.";
+        postImg.parentNode.insertBefore(text, postImg);
+      });
+    }
   });
 }

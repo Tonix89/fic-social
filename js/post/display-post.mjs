@@ -35,9 +35,11 @@ export function displayPost(data, postCont) {
   const time = updated.split("T")[1];
   const finalTime = time.split(".")[0];
   // console.log(media);
-  let mediaUrl = media;
+  let mediaUrl = "";
   if (!media) {
     mediaUrl = "";
+  } else {
+    mediaUrl = `<img class="post-img" src="${media}" data-bs-toggle="modal" data-bs-target="#comment" id="${id}*${id}">`;
   }
   let editIcon = `<img src="icons/edit_FILL0_wght200_GRAD0_opsz24.png" alt="edit icon" />`;
   let delIcon = `<img src="icons/delete_FILL0_wght200_GRAD0_opsz24.png" alt="delete icon" />`;
@@ -68,7 +70,7 @@ export function displayPost(data, postCont) {
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png" alt="calendar icon" /></div>
               </div>
               <p class="post-text">${body}</p>
-              <img class="post-img" src="${mediaUrl}" data-bs-toggle="modal" data-bs-target="#comment" id="${id}*${id}">
+              ${mediaUrl}
               <div class="post-buttons ">
                   <div class="position-relative">${likeCont}</div>
                   <div class="position-relative" data-bs-toggle="modal" data-bs-target="#comment"><img  class="position-relative comment-button" id="${id}.${id}" src="icons/comment_bank_FILL0_wght200_GRAD0_opsz24.png" alt="comment icon" /><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}com-counter">${comments}</span></div>
