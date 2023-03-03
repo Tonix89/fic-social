@@ -1,5 +1,12 @@
 import { tagUserSearch } from "../tagUser-search.mjs";
 import { idSearch } from "../id-search.mjs";
+
+/**
+ * This function changes the API request endpoint based on the search value.
+ * Then it calls a function that send an API request.
+ * @param {Element} searchInput This is a html element which holds the search value.
+ * @param {Element} postCont This is a html element where the result be displayed.
+ */
 export function goSearch(searchInput, postCont) {
   const searchValue = searchInput.value.split("")[0];
   let searchUrl = "";

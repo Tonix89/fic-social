@@ -1,4 +1,16 @@
 import { auth } from "../logout/authorize.mjs";
+
+/**
+ * This function calls a function that sent an API request.
+ * @param {Element} delBtnId This is a html element that calls a function when click.
+ * @example
+ * ```js
+ * const delBtnId = document.querySelector(".delete-button");
+ * delBtnId.addEventListener("click", function()=>{
+ *  anotherFunction();
+ * })
+ * ```
+ */
 export function goDelete(delBtnId) {
   if (!delBtnId.innerHTML) {
     delBtnId.style.display = "none";
@@ -12,6 +24,10 @@ export function goDelete(delBtnId) {
   });
 }
 
+/**
+ * This function sent an API "DELETE" request.
+ * @param {String | number} postId  This is the id the post to be deleted.
+ */
 function deletePost(postId) {
   fetch("https://api.noroff.dev/api/v1/social/posts/" + postId, {
     method: "DELETE",

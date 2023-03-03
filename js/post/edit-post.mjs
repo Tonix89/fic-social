@@ -1,26 +1,27 @@
 import { auth } from "../logout/authorize.mjs";
 
-async function editPost(postId) {
-  return await fetch("https://api.noroff.dev/api/v1/social/posts/" + postId, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${auth}`,
-    },
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((data) => {
-      //   console.log(data);
-      return data;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
+/**
+ * This function get the post details to be edit and display it on the create a post form
+ * then set the post id as url parameter without reloading the page.
+ * @param {NodeList} postInput This is a nodelist of input in the post form.
+ * @param {Element} editBtnId This is a html element that calls a function when click.
+ * @example
+ * ```js
+ * const editBtnId = document.querySelector(".edit-button")
+ * // Get all the input element in the post form then destructured.
+ * const postInput = document.querySelectorAll(".post-input");
+ * const [titleInput, bodyInput, tagsInput, mediaInput] = postInput;
+ * // The data of the post then destructured.
+ * const postData = {title:this is the title, body:"",tags:"",media:""}
+ * const { title, body, tags, media } = postData;
+ * editBtnId.addEventListener("click", function(){
+ *     titleInput.value = title;
+ *     bodyInput.value = body;
+ *     tagsInput.value = tags;
+ *     mediaInput.value = media;
+ * })
+ * ```
+ */
 export function gotoedit(postInput, editBtnId) {
   if (!editBtnId.innerHTML) {
     editBtnId.style.display = "none";
@@ -63,4 +64,30 @@ export function gotoedit(postInput, editBtnId) {
       document.querySelector(".header-nav").scrollIntoView();
     });
   });
+}
+
+/**
+ * This function sent an API "GET" request.
+ * @param {string | number} postId This is the id of the post.
+ * @returns {Array} This return an arrat of data of the post.
+ */
+async function editPost(postId) {
+  return await fetch("https://api.noroff.dev/api/v1/social/posts/" + postId, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${auth}`,
+    },
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((data) => {
+      //   console.log(data);
+      return data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }

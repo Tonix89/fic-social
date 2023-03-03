@@ -2,6 +2,16 @@ import { auth } from "../logout/authorize.mjs";
 import { validateUrl } from "../validate/url.mjs";
 import { validateLength } from "../validate/length.mjs";
 let url = "https://api.noroff.dev/api/v1/social/posts";
+
+/**
+ *
+ * @param {NodeList} postInput This is a nodelist of input in the post form.
+ * @param {Element} postTitleError This is a html element that will display if validation is not successful.
+ * @param {Element} postMediaError  This is a html element that will display if validation is not successful.
+ * @param {Element} postError This is a html element that will display if validation is not successful.
+ * @param {Element} postLoader This is a html element that will display if while the request is being process.
+ * @param {String} postId Id of the post if it edited or null if it a new post.
+ */
 export function getBodyData(
   postInput,
   postTitleError,
@@ -10,9 +20,16 @@ export function getBodyData(
   postLoader,
   postId
 ) {
+  /**
+   * Check first if the request is to send a new post or to edit a post by checking if postId is true or false.
+   */
   if (postId) {
     url = "https://api.noroff.dev/api/v1/social/posts/" + postId;
   }
+
+  /**
+   * Convert the nodelist to an array then return empty string if the value attribute is not true.
+   */
   const inputArray = Array.prototype.slice.call(postInput).map((input) => {
     if (input.value) {
       return input.value;
@@ -21,6 +38,9 @@ export function getBodyData(
     }
   });
   // console.log(inputArray);
+  /**
+   * Destructured the inputArray.
+   */
   const [title, body, tags, media] = inputArray;
   const tagsArray = tags.split(",");
   if (validateLength(title, 5) === true) {
@@ -55,6 +75,13 @@ export function getBodyData(
   }
 }
 
+/**
+ * This function sent an API "POST" request.
+ * @param {object} postData The data of the body that will be sent to the "POST" request.
+ * @param {Element} postError This is a html element where error will be display.
+ * @param {Element} postLoader This is a html element that will be display while the request is still being processed.
+ * @param {String} postId Id of the post if it edited or null if it a new post.
+ */
 function addPost(postData, postError, postLoader, postId) {
   let bodyData = "";
   if (postId) {

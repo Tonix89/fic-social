@@ -2,20 +2,20 @@ import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
 import { user } from "../logout/authorize.mjs";
-import { gotoedit } from "../post/edit-post.mjs";
-import { tagsArray } from "../post/filter-post.mjs";
 import { deleteEditParam } from "../function/delete-param.mjs";
-import { goDelete } from "../post/delete-post.mjs";
 import { validateUrl } from "../validate/url.mjs";
 import { sendPicture } from "../user-profile/update-profile.mjs";
-import { hitLike } from "../post/like.mjs";
 import { goSearch } from "../search/search-button/button1.mjs";
-import { openComment } from "../comment/comments.mjs";
-import { getFollowing } from "../follow/follow.mjs";
-import { getContact } from "../contact/contact.mjs";
+import { createTagArray } from "../function/create-tagArray.mjs";
+import { clickButton } from "../function/post-buttons.mjs";
+import { commentModal } from "../function/comment-modal.mjs";
+import { followButtons } from "../follow/follow-buttons.mjs";
+import { userImage } from "../function/user-image.mjs";
 
+// This function delete the page parameter everytime the page reloaded.
 deleteEditParam();
 
+// This function calls a function that logout the current user.
 const logOutBtn = document.querySelector(".logout");
 logOutBtn.addEventListener("click", function () {
   logout();
@@ -130,99 +130,30 @@ const searchBtn2 = document.querySelector(".search-button2");
 const postCont = document.querySelector(".user-post-cont");
 let postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true`;
 
+/**
+ * This function calls a fucntion that send an API request and need the data to return.
+ * @param {URL} postUrl This is the API request url endpoint.
+ * @param {Element} postCont This is a html element where the API request result to be displayed.
+ */
+
 function callingGetPost(postUrl, postCont) {
   getPost(postUrl, postCont).then((data) => {
     // console.log(data);
-    const tagList = document.querySelector("#tagList");
-    tagsArray(data, tagList);
 
-    const tagList2 = document.querySelector("#tagList2");
-    tagsArray(data, tagList2);
-    const delBtn = document.querySelectorAll(".del-button");
-    delBtn.forEach((delBtnId) => {
-      goDelete(delBtnId);
-    });
-    const editBtn = document.querySelectorAll(".edit-button");
-    editBtn.forEach((editBtnId) => {
-      gotoedit(postInput, editBtnId);
-    });
-    const likeBtn = document.querySelectorAll(".react-like");
-    likeBtn.forEach((likeBtnId) => {
-      // console.log(likeBtnId.id);
-      hitLike(likeBtnId);
-    });
+    createTagArray(data);
 
-    const commentBtn = document.querySelectorAll(".comment-button");
-    commentBtn.forEach((commentBtnId) => {
-      commentBtnId.addEventListener("click", function () {
-        // console.log(commentBtnId.id);
-        const postId = commentBtnId.id.split(".")[0];
-        openComment(postId);
-      });
-    });
+    clickButton();
 
-    const postImgBtn = document.querySelectorAll(".post-img");
-    postImgBtn.forEach((postImgBtnId) => {
-      postImgBtnId.addEventListener("click", function () {
-        // console.log(commentBtnId.id);
-        const postId = postImgBtnId.id.split("*")[0];
-        openComment(postId);
-      });
-    });
+    commentModal();
 
-    const followBtns = document.querySelectorAll(".follow-button");
-    function followInfo(followBtns) {
-      getFollowing().then((data) => {
-        // console.log(data);
-        if (data.following.length !== 0) {
-          const followings = data.following;
-          followings.forEach((following) => {
-            const followBtns = document.querySelectorAll(`#${following.name}`);
-            // console.log(followBtns);
-            if (followBtns.length !== 0) {
-              followBtns.forEach((followBtn) => {
-                followBtn.innerHTML = "Followed";
-              });
-            }
-          });
-        } else {
-          followBtns.forEach((followBtn) => {
-            followBtn.innerHTML = "Follow";
-          });
-        }
-        getContact(data);
-      });
-    }
-    followInfo(followBtns);
+    followButtons();
 
-    followBtns.forEach((followBtn) => {
-      followBtn.addEventListener("click", function () {
-        let follow = `${followBtn.id}/follow`;
-        if (followBtn.innerHTML === "Followed") {
-          follow = `${followBtn.id}/unfollow`;
-          followBtn.innerHTML = "Follow";
-        }
-        followUser(follow).then((data) => {
-          // console.log(data);
-          if (data) {
-            followInfo(followBtns);
-          }
-        });
-      });
-    });
-
-    const userImage = document.querySelectorAll(".user-image");
-    userImage.forEach((userImg) => {
-      userImg.addEventListener("click", function () {
-        const userImgModal = document.querySelector(".user-image-container");
-        // console.log(userImg.src);
-        userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
-        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"  /></div>`;
-      });
-    });
+    userImage();
   });
 }
 callingGetPost(postUrl, postCont);
+
+// This function changes the API request url endpoint then call the API request function.
 
 const oldPostBtn = document.getElementById("oldest-post");
 oldPostBtn.addEventListener("click", function () {
@@ -239,7 +170,8 @@ oldPostBtn.addEventListener("click", function () {
 
 const followPostBtn = document.getElementById("followed-post");
 followPostBtn.addEventListener("click", function () {
-  postUrl = `https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true`;
+  postUrl =
+    "https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true";
   postCont.innerHTML = `<div class
     ="post-loader d-flex justify-content-center">
         <div class="spinner-border text-primary" role="status">
@@ -281,6 +213,21 @@ searchBtn2.addEventListener("click", function () {
   document.querySelector("#tagList2").style.display = "none";
 });
 
+/**
+ * This function get tag value to be search.
+ * @param {Element} inputValue This is a html element that holds the value to be search.
+ * @param {Array} postTags This is an array of post tags.
+ * @example
+ * ```js
+ * const postTags = [ tag1, tag2, tag3];
+ * const inputValue = document.querySelector(".search-form");
+ * postTags.forEach((tag)=>{
+ *    tag.addEventListener("click", function(){
+ *      inputValue.value = tag;
+ *  })
+ * })
+ * ```
+ */
 function getTag(inputValue) {
   // console.log(inputValue);
   const postTags = Array.prototype.slice.call(
@@ -309,6 +256,9 @@ searchBtn2.addEventListener("click", function (e) {
   goSearch(searchInput2, postCont);
 });
 
+/**
+ * This function updated the user profile media url.
+ */
 const updateProfile = document.querySelector(".update-profile-button");
 updateProfile.addEventListener("click", function () {
   const updateBtns = document.querySelector(".update-buttons");

@@ -4,6 +4,20 @@ import { isItLiked } from "../post/liked-post.mjs";
 import { hitLike } from "../post/like.mjs";
 import { user } from "../logout/authorize.mjs";
 import { getComments } from "./get-comments.mjs";
+import { userImage } from "../function/user-image.mjs";
+
+/**
+ * This function is only used to call another function that expect return from another module.
+ * @param {number} id This is the id of the Post.
+ * @example
+ * ```js
+ * // Call a function and expect a return of data like arrays.
+ * const id = 12;
+ * myFunction(id).then((data)=>{
+ * // The data is the data of the post with an id of 12 return from function myFunction.
+ * })
+ * ```
+ */
 
 export function openComment(id) {
   getPostDetails(id).then((data) => {
@@ -31,10 +45,10 @@ export function openComment(id) {
     const liked = isItLiked(id);
     // console.log(liked);
     let likeCont = "";
-    if (liked && liked[0] == id) {
-      likeCont = `<img class="position-relative react-like" id="${id}/liked" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg" alt="Liked icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+    if (liked && liked[0] == id && likes !== 0) {
+      likeCont = `<img class="position-relative react-like" id="${id}/liked/modal" src="icons/thumb_up_FILL1_wght600_GRAD-25_opsz24.svg" alt="Liked icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter-modal">${likes} </span>`;
     } else {
-      likeCont = `<img class="position-relative react-like" id="${id}/${id}" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png" alt="Like icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter">${likes} </span>`;
+      likeCont = `<img class="position-relative react-like" id="${id}/${id}/modal" src="icons/thumb_up_FILL0_wght200_GRAD0_opsz24.png" alt="Like icon" /> <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" id="${id}-counter-modal">${likes} </span>`;
     }
     const { comments } = _count;
     const { name, avatar } = author;
@@ -115,14 +129,6 @@ export function openComment(id) {
     const commentCard = document.querySelector(".comments-card");
     getComments(data, commentCard);
 
-    const userImage = document.querySelectorAll(".user-image");
-    userImage.forEach((userImg) => {
-      userImg.addEventListener("click", function () {
-        const userImgModal = document.querySelector(".user-image-container");
-        // console.log(userImg.src);
-        userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
-        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image" /></div>`;
-      });
-    });
+    userImage();
   });
 }

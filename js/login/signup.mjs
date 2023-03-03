@@ -10,6 +10,12 @@ const password = document.getElementById("password2");
 const passwordError = document.getElementById("password2Error");
 const showPw1 = document.getElementById("showPw2");
 
+/**
+ * This function calls a function that send an API "POST" request if the validation is successful.
+ * @param {URL} noroffBaseUrl This is the base url of the API request endpoint.
+ * @param {*} e This is an event listener to prevent the page from reloading when clicking the submit button.
+ */
+
 export function signUp(noroffBaseUrl, e) {
   e.preventDefault();
   if (validateLength(userName.value, 5) === true) {
@@ -65,6 +71,13 @@ export function signUp(noroffBaseUrl, e) {
   }
 }
 
+/**
+ *
+ * @param {object} bodyData This is the body of the data to be sent in the "POST" request.
+ * @param {URL} noroffBaseUrl This is the base url of the API request endpoint.
+ * @returns {array} This will return the data that sent back from the request.
+ */
+
 async function submitRegistration(bodyData, noroffBaseUrl) {
   const res = await fetch(noroffBaseUrl + "/social/auth/register", {
     method: "POST",
@@ -76,6 +89,7 @@ async function submitRegistration(bodyData, noroffBaseUrl) {
   return res.json();
 }
 
+// This will show the password by changing the form input type from text to password.
 showPw1.addEventListener("click", function () {
   if (showPw1.checked) {
     document.getElementById("password2").type = "text";

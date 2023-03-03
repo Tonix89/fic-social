@@ -1,3 +1,21 @@
+import { userImage } from "../function/user-image.mjs";
+/**
+ * This function get all the details in an array to display in the html element.
+ * @param {Array} data This is an array of data of the followers and following.
+ * @example
+ * ```js
+ * const data = [{id:user1,follower:true,following:false},{id:user2,follower:true,following:true},{id:user3,follower:true,following:false}];
+ * //Loop data then assign innerHtml that passes the condition.
+ * data.forEach((dat)=>{
+ *      if(dat.follower){
+ *          // Assign what will be in the innerHTML.
+ *      }else{
+ *          // Assign what will be in the innerHTML.
+ *      }
+ * })
+ * ```
+ */
+
 export function following(data) {
   //   console.log(data);
   const contactCont = document.querySelector(".contacts-cont");
@@ -64,20 +82,7 @@ export function following(data) {
         }
       }
 
-      const userImage = document.querySelectorAll(".user-image");
-      userImage.forEach((userImg) => {
-        userImg.addEventListener("click", function () {
-          const userImgModal = document.querySelector(".user-image-container");
-          //   console.log(userImg.src);
-          if (window.innerWidth > 768) {
-            userImgModal.innerHTML = `<div class="d-flex justify-content-center" style="width:100vw;height:90vh;">
-        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"/></div>`;
-          } else {
-            userImgModal.innerHTML = `<div class="d-flex justify-content-center">
-        <img class="mh-100 mw-100" src="${userImg.src}" alt="user profile image"/></div>`;
-          }
-        });
-      });
+      userImage();
     });
   }
 }

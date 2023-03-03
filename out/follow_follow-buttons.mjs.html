@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: follow/follow-buttons.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: follow/follow-buttons.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { getFollowing } from "./follow.mjs";
+import { followUser } from "./follow-user.mjs";
+import { getContact } from "../contact/contact.mjs";
+
+/**
+ * This functions will determined if the displayed users are followed by login user or not.
+ * @param {Element} buttons These are html element.
+ * @param {Array} data This is an array of data of who are the users followed by the login user.
+ * @example
+ * ```js
+ * const buttons = document.querySelectorAll(".buttons");
+ * const data = [{user1},{user3}];
+ * // Loop the name of users the login user's follow then use it to get the html element to change the innerHTML.
+ * const userButton = document.querySelector("user1");
+ * userButton.innerHTML = "Followed";
+ * // If the data lenght is 0, the login user is not following anyone.
+ * buttos.innerHTML = "Follow";
+ * ```
+ */
+
+export function followButtons() {
+  const followBtns = document.querySelectorAll(".follow-button");
+  function followInfo(followBtns) {
+    getFollowing().then((data) => {
+      // console.log(data);
+      getContact(data);
+      if (data.following.length !== 0) {
+        const followings = data.following;
+        followings.forEach((following) => {
+          const userfollowBtns = document.querySelectorAll(
+            `#${following.name}`
+          );
+          // console.log(userfollowBtns);
+          if (userfollowBtns.length !== 0) {
+            userfollowBtns.forEach((followBtn) => {
+              followBtn.innerHTML = "Followed";
+            });
+          }
+        });
+      } else {
+        followBtns.forEach((followBtn) => {
+          followBtn.innerHTML = "Follow";
+        });
+      }
+    });
+  }
+  followInfo(followBtns);
+
+  /**
+   * This function will call a function that will send a "PUT" method request.
+   * It will update the status of the other user if the login user is following or not the other user.
+   * @param {Element} followBtns This is a html element.
+   * @example
+   * ```js
+   * const followButtons = // Get all follow buttons available in current page.
+   * // Get the id follow button you clicked using forEach().
+   * followButtons.forEach((followButton)=>{
+   *      // Get the id and use it as parameter in "PUT" request.
+   *      putRequest(followButton);
+   * })
+   */
+
+  followBtns.forEach((followBtn) => {
+    followBtn.addEventListener("click", function () {
+      let follow = `${followBtn.id}/follow`;
+      if (followBtn.innerHTML === "Followed") {
+        follow = `${followBtn.id}/unfollow`;
+        const userfollowBtns = document.querySelectorAll(`#${followBtn.id}`);
+        userfollowBtns.forEach((userfollowBtn) => {
+          userfollowBtn.innerHTML = "Follow";
+        });
+      }
+      followUser(follow).then((data) => {
+        // console.log(data);
+        if (data) {
+          followInfo(followBtns);
+        }
+      });
+    });
+  });
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#callingGetPost">callingGetPost</a></li><li><a href="global.html#clickButton">clickButton</a></li><li><a href="global.html#commentModal">commentModal</a></li><li><a href="global.html#countsLike">countsLike</a></li><li><a href="global.html#deleteEditParam">deleteEditParam</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#displayPost">displayPost</a></li><li><a href="global.html#editPost">editPost</a></li><li><a href="global.html#followButtons">followButtons</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#following">following</a></li><li><a href="global.html#getBodyData">getBodyData</a></li><li><a href="global.html#getComments">getComments</a></li><li><a href="global.html#getContact">getContact</a></li><li><a href="global.html#getFollowing">getFollowing</a></li><li><a href="global.html#getPost">getPost</a></li><li><a href="global.html#getPostDetails">getPostDetails</a></li><li><a href="global.html#getReply">getReply</a></li><li><a href="global.html#getRequest">getRequest</a></li><li><a href="global.html#getTag">getTag</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#goDelete">goDelete</a></li><li><a href="global.html#goLogin">goLogin</a></li><li><a href="global.html#goSearch">goSearch</a></li><li><a href="global.html#gotoedit">gotoedit</a></li><li><a href="global.html#hitLike">hitLike</a></li><li><a href="global.html#idSearch">idSearch</a></li><li><a href="global.html#isItLiked">isItLiked</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openComment">openComment</a></li><li><a href="global.html#profileCard">profileCard</a></li><li><a href="global.html#saveLikedPost">saveLikedPost</a></li><li><a href="global.html#sendComment">sendComment</a></li><li><a href="global.html#sendPicture">sendPicture</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#submitRegistration">submitRegistration</a></li><li><a href="global.html#tagUserSearch">tagUserSearch</a></li><li><a href="global.html#tagsArray">tagsArray</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#userImage">userImage</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateLength">validateLength</a></li><li><a href="global.html#validateUrl">validateUrl</a></li><li><a href="global.html#validateUsername">validateUsername</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 03 2023 11:53:38 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

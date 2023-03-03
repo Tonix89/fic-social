@@ -1,5 +1,10 @@
 import { auth } from "../logout/authorize.mjs";
 
+/**
+ * This function send and API "GET" request to get the details of the post.
+ * @param {number} postId This is the id of the post.
+ * @returns {Array} This return an array of data from the API request.
+ */
 export async function getPostDetails(postId) {
   const options = {
     headers: {

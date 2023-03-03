@@ -1,12 +1,24 @@
 import { getPost } from "../post/get-post.mjs";
-import { gotoedit } from "../post/edit-post.mjs";
-import { goDelete } from "../post/delete-post.mjs";
-import { hitLike } from "../post/like.mjs";
-import { openComment } from "../comment/comments.mjs";
-import { getFollowing } from "../follow/follow.mjs";
-import { followUser } from "../follow/follow-user.mjs";
-import { getContact } from "../contact/contact.mjs";
+import { clickButton } from "../function/post-buttons.mjs";
+import { commentModal } from "../function/comment-modal.mjs";
+import { followButtons } from "../follow/follow-buttons.mjs";
+import { userImage } from "../function/user-image.mjs";
 
+/**
+ * This function calls a function that send an API request then receive a data back to use to display in html.
+ * @param {String} searchInput This is the search value.
+ * @param {URL} searchUrl This is the API request endpoint.
+ * @param {Element} postCont This is a html element where the result to be displayed.
+ * @example
+ * ```js
+ * const searchInput = "testing";
+ * const searchUrl = "https://example.com/api/v1";
+ * const postCont = document.querySelector(".post-container");
+ * apiRequestFunction(searchInput, searchUrl).then((dataBack)=>{
+ *    postCont.innerHTML = dataBack;
+ * })
+ * ```
+ */
 export function tagUserSearch(searchInput, searchUrl, postCont) {
   postCont.innerHTML = `<div class
     ="post-loader d-flex justify-content-center">
@@ -18,7 +30,6 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
   postHeader.innerHTML = `Searching for "${searchInput}"`;
 
   getPost(searchUrl, postCont).then((data) => {
-    const postInput = document.querySelectorAll(".post-input");
     postHeader.innerHTML = `Search Results for "${searchInput}"`;
 
     // console.log(data);
@@ -46,71 +57,12 @@ export function tagUserSearch(searchInput, searchUrl, postCont) {
       </div>`;
     }
 
-    const editBtn = document.querySelectorAll(".edit-button");
-    editBtn.forEach((editBtnId) => {
-      // console.log(postInput, editBtnId);
-      gotoedit(postInput, editBtnId);
-    });
+    clickButton();
 
-    const delBtn = document.querySelectorAll(".del-button");
-    delBtn.forEach((delBtnId) => {
-      goDelete(delBtnId);
-    });
+    commentModal();
 
-    const likeBtn = document.querySelectorAll(".react-like");
-    likeBtn.forEach((likeBtnId) => {
-      // console.log(likeBtnId.id);
-      hitLike(likeBtnId);
-    });
+    followButtons();
 
-    const commentBtn = document.querySelectorAll(".comment-button");
-    commentBtn.forEach((commentBtnId) => {
-      commentBtnId.addEventListener("click", function () {
-        // console.log(commentBtnId.id);
-        const postId = commentBtnId.id.split(".")[0];
-        openComment(postId);
-      });
-    });
-
-    const followBtns = document.querySelectorAll(".follow-button");
-    function followInfo(followBtns) {
-      getFollowing().then((data) => {
-        // console.log(data);
-        getContact(data);
-        if (data.following.length !== 0) {
-          const followings = data.following;
-          followings.forEach((following) => {
-            const followBtns = document.querySelectorAll(`#${following.name}`);
-            // console.log(followBtns);
-            if (followBtns.length !== 0) {
-              followBtns.forEach((followBtn) => {
-                followBtn.innerHTML = "Followed";
-              });
-            }
-          });
-        } else {
-          followBtns.forEach((followBtn) => {
-            followBtn.innerHTML = "Follow";
-          });
-        }
-      });
-    }
-    followInfo(followBtns);
-
-    followBtns.forEach((followBtn) => {
-      followBtn.addEventListener("click", function () {
-        let follow = `${followBtn.id}/follow`;
-        if (followBtn.innerHTML === "Followed") {
-          follow = `${followBtn.id}/unfollow`;
-          followBtn.innerHTML = "Follow";
-        }
-        followUser(follow).then((data) => {
-          // console.log(data);
-          if (data) {
-            followInfo(followBtns);
-          }
-        });
-      });
-    });
+    userImage();
   });
 }

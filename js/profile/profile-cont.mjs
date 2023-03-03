@@ -1,6 +1,10 @@
 const userPic = document.querySelector(".user-pic");
 const profileInfo = document.querySelector(".profile-text");
 
+/**
+ * This function destructured the data about the login user then display to the html profile container.
+ * @param {Array} userData This is an array of data baout the user.
+ */
 export function profileCard(userData) {
   // console.log(userData);
   const { name, email, banner, avatar } = userData;

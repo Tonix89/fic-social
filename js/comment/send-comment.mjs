@@ -1,5 +1,30 @@
 import { auth } from "../logout/authorize.mjs";
 import { openComment } from "./comments.mjs";
+
+/**
+ * This function sent a comment using an API endpoint with "POST" method.
+ * The request body depends if the comment is reply to main post or to another comment.
+ * @param {number|string} id This is the id of the main post or  a comment.
+ * @param {Array} data This is an array of data of the post.
+ * @example
+ * ```js
+ * // Determine if the comment is a reply to the main post or to another comment by looking on its type.
+ * const id = "12";
+ * let requestBody = "";
+ * if(typeof id === "string"){
+ *          // Request body must include id. This is the id of the comment to reply.
+ *          requestBody = {
+ *                  body : comment,
+ *                  replyToId : id
+ *              }
+ *      }else{
+ *          // Request body must only be the comment value. This is a reply to the main post.
+ *          requestBody = {
+ *                  body : comment
+ *              }
+ *      }
+ * ```
+ */
 export async function sendComment(id, data) {
   const commentInput = document.getElementById(`${data.id}-input`);
   if (commentInput.value) {

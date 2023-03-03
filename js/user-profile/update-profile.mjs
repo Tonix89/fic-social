@@ -1,6 +1,12 @@
 import { user } from "../logout/authorize.mjs";
 import { auth } from "../logout/authorize.mjs";
 
+/**
+ * This function sends an API "PUT" request to update a media link.
+ * @param {URL} media This is an url of the media.
+ * @param {Element} errorText This is a html element that will be display when error occur on request.
+ * @returns {Array} This returns an array of data reponses of the request.
+ */
 export async function sendPicture(media, errorText) {
   return fetch(
     "https://api.noroff.dev/api/v1/social/profiles/" + user + "/media",

@@ -1,3 +1,29 @@
+/**
+ * This function filter the comments that is a reply from  a comment or "replyTtoId" is  true.
+ * @param {array} data Array of comments in from an API Call.
+ * @param {number} id This is the id of the comment that has reply.
+ * @example
+ * ```mjs
+ * // Filter first all the comments with has a reply.
+ * const  data = [{com1:comment, reply:true, replyToId:12}, {com2:comment,id:2,reply:false}, {com3:comment,reply:true, replyToId:13}];
+ * const dataFiltered = data.filter((param)=>{
+ *      if(param.id){
+ *      return true
+ *      }else{
+ *      return false
+ *      }
+ *  })
+ * // dataFiltered will now only have [{com1:comment, reply:true, replyToId:12}, {com3:comment,reply:true,replyToId:13}];
+ * // Next is to match which comment it replies using id param.
+ * const id = 12;
+ * dataFiltered.forEach((param)=>{
+ * if(id === replyToId){
+ *  // The expected result will be com1.
+ * }
+ * })
+ * ```
+ */
+
 export function getReply(data, id) {
   //   console.log(data, id);
   const comReply = data.comments.filter((comments) => {

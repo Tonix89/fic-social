@@ -33,6 +33,10 @@ gotoSignUp.addEventListener("click", function (e) {
   });
 });
 
+/**
+ * This function change the type of the password input so that it can be readable.
+ * @param {Element} showPw This is a html element.
+ */
 showPw.addEventListener("click", function () {
   if (showPw.checked) {
     document.getElementById("password").type = "text";

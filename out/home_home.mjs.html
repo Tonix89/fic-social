@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: home/home.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: home/home.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { logout } from "../logout/logout.mjs";
+import { getBodyData } from "../post/add-post.mjs";
+import { getPost } from "../post/get-post.mjs";
+import { deleteEditParam } from "../function/delete-param.mjs";
+import { goSearch } from "../search/search-button/button1.mjs";
+import { userImage } from "../function/user-image.mjs";
+import { followButtons } from "../follow/follow-buttons.mjs";
+import { commentModal } from "../function/comment-modal.mjs";
+import { clickButton } from "../function/post-buttons.mjs";
+import { createTagArray } from "../function/create-tagArray.mjs";
+
+// This function delete the page parameter everytime the page reloaded.
+deleteEditParam();
+
+// This function calls a function that logout the current user.
+const logOutBtn = document.querySelector(".logout");
+logOutBtn.addEventListener("click", function () {
+  logout();
+});
+
+const postCont = document.querySelector(".user-post-cont");
+const postHeader = document.querySelector(".post-header");
+
+let postUrl =
+  "https://api.noroff.dev/api/v1/social/posts?_author=true&amp;_comments=true&amp;_reactions=true&amp;sort=created&amp;sortOrder=desc";
+
+/**
+ * This function calls a fucntion that send an API request and need the data to return.
+ * @param {URL} postUrl This is the API request url endpoint.
+ * @param {Element} postCont This is a html element where the API request result to be displayed.
+ */
+
+export function callingGetPost(postUrl, postCont) {
+  getPost(postUrl, postCont).then((data) => {
+    // console.log(data);
+
+    createTagArray(data);
+
+    clickButton();
+
+    commentModal();
+
+    followButtons();
+
+    userImage();
+  });
+}
+callingGetPost(postUrl, postCont);
+
+// This functions changes the API request url endpoint then call the API request function.
+
+const oldPostBtn = document.getElementById("oldest-post");
+oldPostBtn.addEventListener("click", function () {
+  postUrl =
+    "https://api.noroff.dev/api/v1/social/posts?_author=true&amp;_comments=true&amp;_reactions=true&amp;sort=created&amp;sortOrder=asc";
+  postCont.innerHTML = `&lt;div class
+    ="post-loader d-flex justify-content-center">
+        &lt;div class="spinner-border text-primary" role="status">
+            &lt;span class="visually-hidden">Loading...&lt;/span>
+          &lt;/div>
+    &lt;/div>`;
+  postHeader.innerHTML = "Oldest Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+// This function changes the API request url endpoint then call the API request function.
+
+const followPostBtn = document.getElementById("followed-post");
+followPostBtn.addEventListener("click", function () {
+  postUrl =
+    "https://api.noroff.dev/api/v1/social/posts/following?_author=true&amp;_comments=true&amp;_reactions=true";
+  postCont.innerHTML = `&lt;div class
+    ="post-loader d-flex justify-content-center">
+        &lt;div class="spinner-border text-primary" role="status">
+            &lt;span class="visually-hidden">Loading...&lt;/span>
+          &lt;/div>
+    &lt;/div>`;
+  postHeader.innerHTML = "Following Posts";
+  callingGetPost(postUrl, postCont);
+});
+
+// This function refresh the page to run the API Request again with its original url endpoint.
+const latestPostBtn = document.getElementById("latest-post");
+latestPostBtn.addEventListener("click", function () {
+  location.reload();
+});
+
+const postTitleError = document.querySelector("#postTitleError");
+const postMediaError = document.querySelector("#postMediaError");
+const postBtn = document.querySelector("#post-button");
+const submitPostLoader = document.querySelector("#submit-post-loader");
+const postError = document.querySelector(".postError");
+const searchForm = document.querySelector(".search-form-cont");
+const searchInput = document.querySelector(".search-input");
+const searchForm2 = document.querySelector(".search-form-cont2");
+const searchInput2 = document.querySelector(".search-input2");
+const searchBtn = document.querySelector(".search-button");
+const searchBtn2 = document.querySelector(".search-button2");
+
+/**
+ *  This function send the input of post form and changes the value of the postId if it is edited or new post.
+ * @param {Element} postBtn This is a button a html that trigger the form to submit.
+ * @param {string | number} postId This  is the id of the post if edited and it is null if a new post.
+ * @example
+ * ```js
+ * const postBtn = document.querySelector(".post-button"),
+ * const postId = "";
+ * // Get the current url parameter if "edit" key is true.
+ * if(edit){
+ * // Change postId value to "edit" value.
+ * }
+ * ```
+ */
+postBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  const postInput = document.querySelectorAll(".post-input");
+
+  const queryString = document.location.search;
+  const params = new URLSearchParams(queryString);
+  const edit = params.get("edit");
+
+  let postId = "";
+  if (edit) {
+    postId = edit;
+    document.querySelector(".edit-post").classList.remove("text-danger");
+    postInput.forEach((inputClass) => {
+      inputClass.classList.remove("text-danger");
+    });
+  }
+  getBodyData(
+    postInput,
+    postTitleError,
+    postMediaError,
+    postError,
+    submitPostLoader,
+    postId
+  );
+});
+
+searchForm.addEventListener("mouseover", function () {
+  document.querySelector("#tagList").style.display = "block";
+  getTag(searchInput);
+});
+
+searchForm.addEventListener("mouseout", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
+
+searchForm2.addEventListener("mouseover", function () {
+  document.querySelector("#tagList2").style.display = "block";
+  getTag(searchInput2);
+});
+
+searchForm2.addEventListener("mouseout", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
+
+searchBtn.addEventListener("click", function () {
+  document.querySelector("#tagList").style.display = "none";
+});
+
+searchBtn2.addEventListener("click", function () {
+  document.querySelector("#tagList2").style.display = "none";
+});
+
+/**
+ * This function get tag value to be search.
+ * @param {Element} inputValue This is a html element that holds the value to be search.
+ * @param {Array} postTags This is an array of post tags.
+ * @example
+ * ```js
+ * const postTags = [ tag1, tag2, tag3];
+ * const inputValue = document.querySelector(".search-form");
+ * postTags.forEach((tag)=>{
+ *    tag.addEventListener("click", function(){
+ *      inputValue.value = tag;
+ *  })
+ * })
+ * ```
+ */
+function getTag(inputValue) {
+  // console.log(inputValue);
+  const postTags = Array.prototype.slice.call(
+    document.querySelectorAll(".postTags")
+  );
+  // console.log(postTags);
+  postTags.forEach((tag) => {
+    // console.log(tag.innerHTML);
+    tag.addEventListener("click", function (e) {
+      e.preventDefault();
+      // console.log(tag.innerHTML);
+      inputValue.value = `#${tag.innerHTML}`;
+    });
+  });
+}
+
+searchBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (searchInput.value) {
+    goSearch(searchInput, postCont);
+  }
+});
+
+searchBtn2.addEventListener("click", function (e) {
+  e.preventDefault();
+  if (searchInput2.value) {
+    postHeader.scrollIntoView();
+    goSearch(searchInput2, postCont);
+  }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#callingGetPost">callingGetPost</a></li><li><a href="global.html#clickButton">clickButton</a></li><li><a href="global.html#commentModal">commentModal</a></li><li><a href="global.html#countsLike">countsLike</a></li><li><a href="global.html#deleteEditParam">deleteEditParam</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#displayPost">displayPost</a></li><li><a href="global.html#editPost">editPost</a></li><li><a href="global.html#followButtons">followButtons</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#following">following</a></li><li><a href="global.html#getBodyData">getBodyData</a></li><li><a href="global.html#getComments">getComments</a></li><li><a href="global.html#getContact">getContact</a></li><li><a href="global.html#getFollowing">getFollowing</a></li><li><a href="global.html#getPost">getPost</a></li><li><a href="global.html#getPostDetails">getPostDetails</a></li><li><a href="global.html#getReply">getReply</a></li><li><a href="global.html#getRequest">getRequest</a></li><li><a href="global.html#getTag">getTag</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#goDelete">goDelete</a></li><li><a href="global.html#goLogin">goLogin</a></li><li><a href="global.html#goSearch">goSearch</a></li><li><a href="global.html#gotoedit">gotoedit</a></li><li><a href="global.html#hitLike">hitLike</a></li><li><a href="global.html#idSearch">idSearch</a></li><li><a href="global.html#isItLiked">isItLiked</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openComment">openComment</a></li><li><a href="global.html#profileCard">profileCard</a></li><li><a href="global.html#saveLikedPost">saveLikedPost</a></li><li><a href="global.html#sendComment">sendComment</a></li><li><a href="global.html#sendPicture">sendPicture</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#submitRegistration">submitRegistration</a></li><li><a href="global.html#tagUserSearch">tagUserSearch</a></li><li><a href="global.html#tagsArray">tagsArray</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#userImage">userImage</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateLength">validateLength</a></li><li><a href="global.html#validateUrl">validateUrl</a></li><li><a href="global.html#validateUsername">validateUsername</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 03 2023 11:53:38 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

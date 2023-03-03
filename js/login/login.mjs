@@ -6,6 +6,12 @@ const emailError = document.getElementById("emailError");
 const password = document.getElementById("password");
 const passwordError = document.getElementById("passwordError");
 
+/**
+ * This function calls a function that send an API "POST" request if the validation is successful.
+ * @param {URL} noroffBaseUrl This is the base url of the API request endpoint.
+ * @param {*} e This is an event listener to prevent the page from reloading when clicking the submit button.
+ */
+
 export function login(noroffBaseUrl, e) {
   e.preventDefault();
 
@@ -44,6 +50,13 @@ export function login(noroffBaseUrl, e) {
     });
   }
 }
+
+/**
+ *
+ * @param {object} bodyData This is the body of the data to be sent in the "POST" request.
+ * @param {URL} noroffBaseUrl This is the base url of the API request endpoint.
+ * @returns {array} This will return the data that sent back from the request.
+ */
 
 async function goLogin(bodyData, noroffBaseUrl) {
   const res = await fetch(noroffBaseUrl + "/social/auth/login", {
