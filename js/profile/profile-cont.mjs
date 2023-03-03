@@ -1,3 +1,5 @@
+import { userImage } from "../function/user-image.mjs";
+
 const userPic = document.querySelector(".user-pic");
 const profileInfo = document.querySelector(".profile-text");
 
@@ -27,4 +29,6 @@ export function profileCard(userData) {
                             <h6>Followers : ${followers}</h6>
                             <h6>Following : ${following}</h6>
                         </div>`;
+
+  userImage();
 }

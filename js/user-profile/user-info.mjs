@@ -1,3 +1,4 @@
+import { userImage } from "../function/user-image.mjs";
 import { profileCard } from "../profile/profile-cont.mjs";
 
 const nameOfUser = document.querySelector("#nameOfUser");
@@ -21,10 +22,12 @@ export function getUserInfo(auth, user) {
         }
         nameOfUser.innerHTML = `<h4>${res.name}</h4>`;
         if (res.avatar) {
-          userPic.innerHTML = `<img src="${res.avatar}" alt="user profile image" />`;
+          userPic.innerHTML = `<img class="user-image" src="${res.avatar}" alt="user profile image" />`;
         } else {
           userPic.innerHTML = `<img src="images/profile-icon.png" alt="user profile image" />`;
         }
+
+        userImage();
       }
     })
     .catch((error) => {
