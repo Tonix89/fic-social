@@ -1,6 +1,7 @@
 import { getFollowing } from "./follow.mjs";
 import { followUser } from "./follow-user.mjs";
 import { getContact } from "../contact/contact.mjs";
+import { user } from "../logout/authorize.mjs";
 
 /**
  * This functions will determined if the displayed users are followed by login user or not.
@@ -42,6 +43,11 @@ export function followButtons() {
           followBtn.innerHTML = "Follow";
         });
       }
+      followBtns.forEach((followBtn) => {
+        if (followBtn.id === user) {
+          followBtn.innerHTML = "";
+        }
+      });
     });
   }
   followInfo(followBtns);
