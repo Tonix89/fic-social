@@ -17,7 +17,9 @@ export function userImage() {
 
   userImage.forEach((userImg) => {
     userImg.addEventListener("error", function () {
-      userImg.src = "images/profile-icon.png";
+      let newImg = document.createElement("div");
+      newImg.innerHTML = `<img src="images/profile-icon.png" data-bs-toggle="tooltip" data-bs-placement="top" title="Media url is either broken or not public."/>`;
+      userImg.parentNode.replaceChild(newImg, userImg);
     });
 
     userImg.addEventListener("click", function () {
