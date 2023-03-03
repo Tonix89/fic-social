@@ -14,7 +14,12 @@
 
 export function userImage() {
   const userImage = document.querySelectorAll(".user-image");
+
   userImage.forEach((userImg) => {
+    userImg.addEventListener("error", function () {
+      userImg.src = "images/profile-icon.png";
+    });
+
     userImg.addEventListener("click", function () {
       const userImgModal = document.querySelector(".user-image-container");
       if (window.innerWidth > 768) {

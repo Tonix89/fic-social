@@ -11,6 +11,7 @@ import { clickButton } from "../function/post-buttons.mjs";
 import { commentModal } from "../function/comment-modal.mjs";
 import { followButtons } from "../follow/follow-buttons.mjs";
 import { userImage } from "../function/user-image.mjs";
+import { postMedia } from "../function/post-media.mjs";
 
 // This function delete the page parameter everytime the page reloaded.
 deleteEditParam();
@@ -149,6 +150,8 @@ function callingGetPost(postUrl, postCont) {
     followButtons();
 
     userImage();
+
+    postMedia();
   });
 }
 callingGetPost(postUrl, postCont);
