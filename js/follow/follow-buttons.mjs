@@ -2,6 +2,7 @@ import { getFollowing } from "./follow.mjs";
 import { followUser } from "./follow-user.mjs";
 import { getContact } from "../contact/contact.mjs";
 import { user } from "../logout/authorize.mjs";
+import { searchUser } from "../function/search-user.mjs";
 
 /**
  * This functions will determined if the displayed users are followed by login user or not.
@@ -21,10 +22,13 @@ import { user } from "../logout/authorize.mjs";
 
 export function followButtons() {
   const followBtns = document.querySelectorAll(".follow-button");
+  const username = searchUser();
+  getFollowing(username).then((data) => {
+    getContact(data);
+  });
   function followInfo(followBtns) {
-    getFollowing().then((data) => {
+    getFollowing(user).then((data) => {
       // console.log(data);
-      getContact(data);
       if (data.following.length !== 0) {
         const followings = data.following;
         followings.forEach((following) => {

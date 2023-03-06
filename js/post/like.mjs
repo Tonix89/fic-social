@@ -133,6 +133,7 @@ export function countsLike(reactions) {
  * ```
  */
 function saveLikedPost(data) {
+  // console.log(data);
   const likedPost = localStorage.getItem("likedPost" + user);
   let likePostArray = [];
   if (likedPost) {
