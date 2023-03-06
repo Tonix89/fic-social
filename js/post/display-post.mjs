@@ -59,14 +59,14 @@ export function displayPost(data, postCont) {
               <div class="user-cont">
                   ${userAvatar}
                   <div class="user-header-cont flex-grow-1">
-                      <h5>${name}</h5>
+                      <a class="text-decoration-none text-reset fw-bold" href="profile.html?user=${name}"><h5>${name}</h5></a>
                   </div>
                   <button class="follow-button btn p-0 text-muted m-0 fw-bold" id="${name}" style="font-size:12px;">Follow</button>
               </div>
           </div>
           <div class="post-card-body">
               <div class="d-flex align-items-center">
-                <h6 class="m-0">${title}</h6>
+              <div data-bs-toggle="tooltip" data-bs-placement="top" title="Post ID : ${id}"><h6 class="m-0">${title}</h6></div>
                 <div data-bs-toggle="tooltip" data-bs-placement="top" title="Date Created : ${date} ${finalTime}"><img src="icons/calendar_month_FILL0_wght100_GRAD-25_opsz20.png" alt="calendar icon" /></div>
               </div>
               <p class="post-text">${body}</p>

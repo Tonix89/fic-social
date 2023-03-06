@@ -1,7 +1,6 @@
 import { logout } from "../logout/logout.mjs";
 import { getBodyData } from "../post/add-post.mjs";
 import { getPost } from "../post/get-post.mjs";
-import { user } from "../logout/authorize.mjs";
 import { deleteEditParam } from "../function/delete-param.mjs";
 import { validateUrl } from "../validate/url.mjs";
 import { sendPicture } from "../user-profile/update-profile.mjs";
@@ -12,8 +11,18 @@ import { commentModal } from "../function/comment-modal.mjs";
 import { followButtons } from "../follow/follow-buttons.mjs";
 import { userImage } from "../function/user-image.mjs";
 import { postMedia } from "../function/post-media.mjs";
+import { searchUser } from "../function/search-user.mjs";
+import { getRequest } from "../user-profile/get-user.mjs";
+import { auth } from "../logout/authorize.mjs";
+import { profileCard } from "./profile-cont.mjs";
 
-// This function delete the page parameter everytime the page reloaded.
+let username = searchUser();
+
+getRequest(auth, username).then((res) => {
+  profileCard(res);
+});
+
+// This function delete the page edit parameter everytime the page reloaded.
 deleteEditParam();
 
 // This function calls a function that logout the current user.
@@ -129,7 +138,7 @@ const searchBtn = document.querySelector(".search-button");
 const searchBtn2 = document.querySelector(".search-button2");
 
 const postCont = document.querySelector(".user-post-cont");
-let postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true`;
+let postUrl = `https://api.noroff.dev/api/v1/social/profiles/${username}/posts?_author=true&_comments=true&_reactions=true`;
 
 /**
  * This function calls a fucntion that send an API request and need the data to return.
@@ -160,7 +169,7 @@ callingGetPost(postUrl, postCont);
 
 const oldPostBtn = document.getElementById("oldest-post");
 oldPostBtn.addEventListener("click", function () {
-  postUrl = `https://api.noroff.dev/api/v1/social/profiles/${user}/posts?_author=true&_comments=true&_reactions=true&sort=created&sortOrder=asc`;
+  postUrl = `https://api.noroff.dev/api/v1/social/profiles/${username}/posts?_author=true&_comments=true&_reactions=true&sort=created&sortOrder=asc`;
   postCont.innerHTML = `<div class
     ="post-loader d-flex justify-content-center">
         <div class="spinner-border text-primary" role="status">
@@ -173,8 +182,7 @@ oldPostBtn.addEventListener("click", function () {
 
 const followPostBtn = document.getElementById("followed-post");
 followPostBtn.addEventListener("click", function () {
-  postUrl =
-    "https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true";
+  postUrl = `https://api.noroff.dev/api/v1/social/posts/following?_author=true&_comments=true&_reactions=true`;
   postCont.innerHTML = `<div class
     ="post-loader d-flex justify-content-center">
         <div class="spinner-border text-primary" role="status">

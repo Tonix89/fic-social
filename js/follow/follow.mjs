@@ -1,5 +1,5 @@
-import { user } from "../logout/authorize.mjs";
 import { auth } from "../logout/authorize.mjs";
+import { searchUser } from "../function/search-user.mjs";
 
 /**
  * This function get the details of the login user of who is following and follower using API "GET" request.
@@ -8,8 +8,9 @@ import { auth } from "../logout/authorize.mjs";
  */
 
 export async function getFollowing() {
+  let username = searchUser();
   const res = await fetch(
-    `https://api.noroff.dev/api/v1/social/profiles/${user}?_following=true&_followers=true`,
+    `https://api.noroff.dev/api/v1/social/profiles/${username}?_following=true&_followers=true`,
     {
       method: "GET",
       headers: {

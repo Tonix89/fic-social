@@ -37,7 +37,7 @@ export function login(noroffBaseUrl, e) {
     };
 
     goLogin(bodyData, noroffBaseUrl).then((res) => {
-      //   console.log(res);
+      // console.log(res);
       if (res.errors) {
         document.querySelector(
           "#loginError"

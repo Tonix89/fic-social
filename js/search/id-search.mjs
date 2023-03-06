@@ -1,7 +1,4 @@
 import { getPostDetails } from "../post/post-details.mjs";
-import { user } from "../logout/authorize.mjs";
-import { countsLike } from "../post/like.mjs";
-import { isItLiked } from "../post/liked-post.mjs";
 import { clickButton } from "../function/post-buttons.mjs";
 import { commentModal } from "../function/comment-modal.mjs";
 import { followButtons } from "../follow/follow-buttons.mjs";

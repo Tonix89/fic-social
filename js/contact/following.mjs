@@ -17,7 +17,7 @@ import { userImage } from "../function/user-image.mjs";
  */
 
 export function following(data) {
-  //   console.log(data);
+  // console.log(data);
   const contactCont = document.querySelector(".contacts-cont");
   const contactCont2 = document.querySelector("#contacts-cont");
   const contactSmCont = document.querySelector(".contacts-sm");
@@ -32,6 +32,7 @@ export function following(data) {
     data.forEach((info, i) => {
       const { name, avatar, follower, following } = info;
       let followerText = "";
+      const username = `<a class="text-decoration-none text-reset fw-bold" href="profile.html?user=${name}"><h5 class="m-0">${name}</h5></a>`;
       if (follower && !following) {
         followerText = `<h6 class="text-muted">Follower</h6>`;
       } else if (follower && following) {
@@ -49,7 +50,7 @@ export function following(data) {
       contactCont.innerHTML += `<div class="contact-profile-cont">
     ${userAvatar}
     <div class="contact-header-cont">
-        <h5 class="m-0">${name}</h5>
+        ${username}
         ${followerText}
     </div>
 </div>`;
@@ -57,7 +58,7 @@ export function following(data) {
         contactCont2.innerHTML += `<div class="contact-profile-cont">
         ${userAvatar}
     <div class="contact-header-cont ms-2">
-        <h5 class="m-0">${name}</h5>
+    ${username}
         ${followerText}
     </div>
 </div>`;
@@ -67,7 +68,7 @@ export function following(data) {
           contactSmCont.innerHTML += `<li><div class="contact-profile-cont">
           ${userAvatar}
     <div class="contact-header-cont ms-2">
-        <h5 class="m-0">${name}</h5>
+    ${username}
         ${followerText}
     </div>
 </div></li>`;
@@ -75,7 +76,7 @@ export function following(data) {
           contactSmBtn.innerHTML = `<div class="profile-img-cont">
           ${userAvatar}
     <div class="profile-header-cont d-flex">
-        <h5>${name}</h5>
+    ${username}
         ${followerText}
     </div>
 </div>`;

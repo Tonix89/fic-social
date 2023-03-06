@@ -23,27 +23,37 @@ import { following } from "./following.mjs";
  * ```
  */
 export function getContact(data) {
+  // console.log(data);
   //   console.log(data.following, data.followers);
   const followers = data.followers;
   const followings = data.following;
   const set = { follower: true };
   const set1 = { following: true };
 
-  followings.forEach((follow) => {
+  let newFollowingArray = followings;
+  if (followings.length > 1) {
+    followers.forEach((follower) =>
+      followings.some((following) => {
+        if (follower.name === following.name) {
+          Object.assign(follower, set);
+          Object.assign(follower, set1);
+        } else {
+          Object.assign(follower, set);
+        }
+      })
+    );
+    newFollowingArray = followings.filter(
+      (follow) => !followers.some((follower) => follower.name === follow.name)
+    );
+  } else {
     followers.forEach((follower) => {
-      if (follow.name !== follower.name) {
-        follower = Object.assign(follower, set);
-      } else {
-        follow = Object.assign(follower, set1);
-      }
+      Object.assign(follower, set);
     });
-  });
+  }
 
-  const newFollowingArray = followings.filter(
-    (follow) => !followers.some((follower) => follower.name === follow.name)
-  );
-  //   console.log(followers, newFollowingArray);
-  const newDataArray = [...newFollowingArray, ...followers];
-  //   console.log(newDataArray);
+  let newFollowersArray = followers;
+  // console.log(newFollowersArray, newFollowingArray);
+  const newDataArray = [...newFollowersArray, ...newFollowingArray];
+  // console.log(newDataArray);
   following(newDataArray);
 }
