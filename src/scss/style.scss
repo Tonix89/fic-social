@@ -25,7 +25,7 @@ main{
     @extend .bg-primary, .d-flex, .justify-content-center, .mb-5;
 
     & .index-logo-cont{
-        @extend header, .row, .d-flex, .flex-column, .align-items-center;
+        @extend header, .row, .d-flex, .flex-column, .align-items-center, .text-center;
 
         & img{
             @extend .col, .p-2;
@@ -114,35 +114,31 @@ main{
                 }
             }
 
-            & .forgot-pw-cont{
-                @extend .d-flex, .align-items-center, .justify-content-between;
+            // & .forgot-pw-cont{
+            //     @extend .d-flex, .align-items-center, .justify-content-between;
 
-                & h5{
-                    @extend .pe-0, .pe-sm-5;
-                }
+            //     & h5{
+            //         @extend .pe-0, .pe-sm-5;
+            //     }
 
-                & button{
-                    @extend .btn, .btn-primary, .h6;
+            //     & button{
+            //         @extend .btn, .btn-primary, .h6;
 
-                    & a{
-                        @extend .text-bg-primary, .fw-bold, .nav-link;
-                    }
-                }
-            }
+            //         & a{
+            //             @extend .text-bg-primary, .fw-bold, .nav-link;
+            //         }
+            //     }
+            // }
 
             & .signup-cont{
-                @extend .forgot-pw-cont;
+                @extend .d-flex, .align-items-center, .justify-content-between;
 
                 & h5{
                     @extend h5, .me-2;
                 }
 
                 & button{
-                    @extend button;
-
-                    & a{
-                        @extend a;
-                    }
+                    @extend .btn, .btn-primary, .h6,.text-bg-primary, .fw-bold;
                 }
             }
         }
