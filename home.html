@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="css/dist/style.css">
+<script src="js/logout/authorize.mjs" type="module"></script>
 </head>
 <body>
     <header>
@@ -16,18 +17,19 @@
             <div class="nav-cont">
               <a href="home.html"><img src="images/fic-social-logo.png" alt="FIC Social logo" class="fic-logo"></a>
               <div class="search-form-cont">
-                <form role="search">
-                  <input type="search" placeholder="Search" aria-label="Search" style="width: 310px;">
-                  <button  type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <form id="search-form" role="search">
+                  <input class="search-input" type="search" placeholder="Search for tag, user or id" aria-label="Search" style="width: 310px;">
+                  <button class="search-button" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                   </svg></button>
                 </form>
+                <ul class="dropdown-menu" id="tagList">
+                    <li><h6 class="dropdown-header">Suggested Tags</h6></li>
+                </ul>
               </div>
               <div class="profile-cont">
-                  <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                  </svg>
+                <div class="user-profile-pic">
+                </div>
                   <div class="profile-menu">
                     <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" class="bi bi-caret-down-fill w-75" viewBox="0 0 16 16">
@@ -35,9 +37,9 @@
                           </svg>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                      <li class="ps-3"><h4>John Doe</h4></li>
+                        <li class="ps-3 dropdown-item" ><a class="text-decoration-none text-reset fw-bold" id="nameOfUser"  href="profile.html"></a></li>
                       <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
-                      <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                      <li><a class=" btn dropdown-item logout">Logout</a></li>
                     </ul>
                   </div>
               </div>
@@ -45,173 +47,121 @@
           </nav>
     </header>
     <main class="home-main">
+        <div class="modal fade" id="comment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen" id="comment-modal-dialog">
+              <div class="modal-content bg-transparent border-0">
+                <div class="modal-body">
+                    <div class="text-end mb-3">
+                        <button type="button" class="btn-close bg-white p-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="card mb-3 comment-container">
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal fade" id="user-image" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-fullscreen" id="comment-modal-dialog">
+              <div class="modal-content bg-transparent border-0">
+                <div class="modal-body">
+                    <div class="text-end mb-3">
+                        <button type="button" class="btn-close bg-white p-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="card mb-3 user-image-container">
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
         <div class="search-cont">
-            <div class="search-form-cont">
-                <form  role="search">
-                    <input type="search" placeholder="Search" aria-label="Search" style="min-width: 310px;">
-                    <button  type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <div class="search-form-cont2">
+                <form class="search-form" role="search">
+                    <input class="search-input2" type="search" placeholder="Search for tag, user or id" aria-label="Search" style="min-width: 300px;">
+                    <button class="search-button2" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                     </svg></button>
                 </form>
+                <ul class="dropdown-menu" id="tagList2">
+                    <li><h6 class="dropdown-header">Suggested Tags</h6></li>
+                </ul>
             </div>
         </div>
         <div class="small-screen-contacts-cont">
             <h5 >Contacts</h5>
             <div class="dropdown-buttons-group-cont">
                 <div class="profile-button-cont">
-                    <button type="button"> 
-                        <div class="profile-img-cont">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                            </svg>
-                            <div class="profile-header-cont">
-                                <h5>John Doe</h5>
-                            </div>
-                        </div>
+                    <button type="button" class="contacts-sm-button"> 
                     </button>
                 </div>
                 <div class="dropdown-button-cont">
                     <button type="button"data-bs-toggle="dropdown" aria-expanded="false" data-bs-reference="parent">
                     </button>
-                    <ul class="dropdown-menu w-100">
-                        <li><div class="contact-profile-cont">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                                <div class="profile-header-cont">
-                                    <h5>John Doe 1</h5>
-                                </div>
-                            </div>
-                        </li>
-                        <li><div class="contact-profile-cont">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                                <div class="profile-header-cont">
-                                    <h5>John Doe 2</h5>
-                                </div>
-                            </div>
-                        </li>
-                        <li><div class="contact-profile-cont">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                                <div class="profile-header-cont">
-                                    <h5>John Doe 3</h5>
-                                </div>
-                            </div>
-                        </li>
+                    <ul class="dropdown-menu w-100 contacts-sm">
                     </ul>
                 </div>
             </div>
         </div>
         <div class="create-post-cont">
-            <h5>Create a post</h5>
-            <form>
-                <div>
-                    <textarea id="exampleFormControlTextarea1" rows="3" placeholder="Type your post here...."></textarea>
+            <h5 class="edit-post">Create a post</h5>
+            <form class="post-form">
+                <div id="create-post">
+                    <div class="postError">
+                    </div>
+                    <div class="post-title">
+                        <label class="h6">Title : <input class="post-input" id="postTitle" type="text" placeholder="(Required)"></label>
+                        <div class="formError d-none" id="postTitleError">
+                            Title must be atleast 5 characters.
+                        </div>
+                    </div>
+                    <textarea class="post-input" id="home-post-textarea" rows="3" placeholder="Type your post here...."></textarea>
+                    <div class="post-tags">
+                        <label class="h6" for="postTags">Tags : </label>
+                        <div class="tag-input">
+                            <input class="post-input" id="postTags" type="text"  aria-describedby="tagHelp" placeholder="(Optional)">
+                        <div id="tagHelp" class="form-text">Use comma(,) if you have multiple tags.</div>
+                        </div>
+                    </div>
+                    <div class="post-media">
+                        <label class="h6">Media Url : <input class="post-input" id="post-media" type="url" placeholder="(Optional)"></label>
+                        <div class="formError d-none" id="postMediaError">
+                            Invalid url.
+                        </div>
+                    </div>
                 </div>
-                <button>Submit</button>
+                <button id="post-button">Submit<span id="submit-post-loader" class="d-none" role="status" aria-hidden="true"></span></button>
             </form>
         </div>
         <div class="latest-post-cont">
-            <h5>Latest Post</h5>
+            <div class="d-flex justify-content-between">
+                <h5 class="post-header">Latest Post</h5>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle fw-bold" type="button" id="filterPost" data-bs-toggle="dropdown" aria-expanded="false">
+                     Filter
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterPost">
+                      <li><button class="dropdown-item" type="button" id="latest-post">Latest Posts</button></li>
+                      <li><button class="dropdown-item" type="button" id="oldest-post">Oldest Posts</button></li>
+                      <li><button class="dropdown-item" type="button" id="followed-post">Followed</button></li>
+                    </ul>
+                  </div>
+            </div>
             <div class="user-post-cont">
-                <div class="post-card">
-                    <div class="post-card-header">
-                        <div class="user-cont">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                            <div class="user-header-cont">
-                                <h5>John Doe 1</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-card-body">
-                        <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis libero quam quia autem sed nesciunt animi labore sapiente voluptatem expedita.</p>
-                        <div class="post-buttons">
-                            <div>Like</div>
-                            <div>Comment</div>
-                        </div>
-                    </div>
-                </div> 
-                <div class="post-card">
-                    <div class="post-card-header">
-                        <div class="user-cont">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                            <div class="user-header-cont">
-                                <h5>John Doe 2</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-card-body">
-                        <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis libero quam quia autem sed nesciunt animi labore sapiente voluptatem expedita.</p>
-                        <div class="post-buttons">
-                            <div>Like</div>
-                            <div>Comment</div>
-                        </div>
-                    </div>
+                <div class
+                ="post-loader d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                 </div>
-                <div class="post-card">
-                    <div class="post-card-header">
-                        <div class="user-cont">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                </svg>
-                            <div class="user-header-cont">
-                                <h5>John Doe 3</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-card-body">
-                        <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perspiciatis libero quam quia autem sed nesciunt animi labore sapiente voluptatem expedita.</p>
-                        <div class="post-buttons">
-                            <div>Like</div>
-                            <div>Comment</div>
-                        </div>
-                    </div>
-                </div> 
             </div>
         </div>
         <div class="big-screen-contacts-cont">
             <h5>Contacts</h5>
-            <div class="contacts-cont">
-                <div class="contact-profile-cont">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                        </svg>
-                    <div class="contact-header-cont">
-                        <h5>John Doe 1</h5>
-                    </div>
-                </div>
-                <div class="contact-profile-cont">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                        </svg>
-                    <div class="contact-header-cont">
-                        <h5>John Doe 2</h5>
-                    </div>
-                </div>
-                <div class="contact-profile-cont">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                        </svg>
-                    <div class="contact-header-cont">
-                        <h5>John Doe 3</h5>
-                    </div>
+            <div class="contacts-cont" style="min-height: 50px;">
+                <div class
+                ="contact-loader d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
                 </div>
             </div>
         </div>
@@ -221,6 +171,6 @@
             <p>All Rights Reserved.</p>
         </div>
     </footer>
+    <script src="js/home/home.mjs" type="module"></script>
 </body>
-<script src="js/logout/logout.js"></script>
 </html>

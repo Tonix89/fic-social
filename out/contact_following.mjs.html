@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: contact/following.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: contact/following.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { userImage } from "../function/user-image.mjs";
+/**
+ * This function get all the details in an array to display in the html element.
+ * @param {Array} data This is an array of data of the followers and following.
+ * @example
+ * ```js
+ * const data = [{id:user1,follower:true,following:false},{id:user2,follower:true,following:true},{id:user3,follower:true,following:false}];
+ * //Loop data then assign innerHtml that passes the condition.
+ * data.forEach((dat)=>{
+ *      if(dat.follower){
+ *          // Assign what will be in the innerHTML.
+ *      }else{
+ *          // Assign what will be in the innerHTML.
+ *      }
+ * })
+ * ```
+ */
+
+export function following(data) {
+  //   console.log(data);
+  const contactCont = document.querySelector(".contacts-cont");
+  const contactCont2 = document.querySelector("#contacts-cont");
+  const contactSmCont = document.querySelector(".contacts-sm");
+  const contactSmBtn = document.querySelector(".contacts-sm-button");
+  contactCont.innerHTML = "";
+  if (contactCont2) {
+    contactCont2.innerHTML = "";
+  }
+  if (data.length === 0) {
+    contactCont.innerHTML = "You have 0 following and 0 followers.";
+  } else {
+    data.forEach((info, i) => {
+      const { name, avatar, follower, following } = info;
+      let followerText = "";
+      if (follower &amp;&amp; !following) {
+        followerText = `&lt;h6 class="text-muted">Follower&lt;/h6>`;
+      } else if (follower &amp;&amp; following) {
+        followerText = `&lt;h6 class="text-muted">Follower/Following&lt;/h6>`;
+      } else {
+        followerText = `&lt;h6 class="text-muted">Following&lt;/h6>`;
+      }
+      let userAvatar = `&lt;svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          &lt;path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          &lt;path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+          &lt;/svg>`;
+      if (avatar) {
+        userAvatar = `&lt;img data-bs-toggle="modal" data-bs-target="#user-image"  class="user-image btn p-0" src="${avatar}" alt="user profile image" />`;
+      }
+      contactCont.innerHTML += `&lt;div class="contact-profile-cont">
+    ${userAvatar}
+    &lt;div class="contact-header-cont">
+        &lt;h5 class="m-0">${name}&lt;/h5>
+        ${followerText}
+    &lt;/div>
+&lt;/div>`;
+      if (contactCont2) {
+        contactCont2.innerHTML += `&lt;div class="contact-profile-cont">
+        ${userAvatar}
+    &lt;div class="contact-header-cont ms-2">
+        &lt;h5 class="m-0">${name}&lt;/h5>
+        ${followerText}
+    &lt;/div>
+&lt;/div>`;
+      }
+      if (contactSmBtn) {
+        if (i !== 0) {
+          contactSmCont.innerHTML += `&lt;li>&lt;div class="contact-profile-cont">
+          ${userAvatar}
+    &lt;div class="contact-header-cont ms-2">
+        &lt;h5 class="m-0">${name}&lt;/h5>
+        ${followerText}
+    &lt;/div>
+&lt;/div>&lt;/li>`;
+        } else {
+          contactSmBtn.innerHTML = `&lt;div class="profile-img-cont">
+          ${userAvatar}
+    &lt;div class="profile-header-cont d-flex">
+        &lt;h5>${name}&lt;/h5>
+        ${followerText}
+    &lt;/div>
+&lt;/div>`;
+        }
+      }
+
+      userImage();
+    });
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#callingGetPost">callingGetPost</a></li><li><a href="global.html#clickButton">clickButton</a></li><li><a href="global.html#commentModal">commentModal</a></li><li><a href="global.html#countsLike">countsLike</a></li><li><a href="global.html#deleteEditParam">deleteEditParam</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#displayPost">displayPost</a></li><li><a href="global.html#editPost">editPost</a></li><li><a href="global.html#followButtons">followButtons</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#following">following</a></li><li><a href="global.html#getBodyData">getBodyData</a></li><li><a href="global.html#getComments">getComments</a></li><li><a href="global.html#getContact">getContact</a></li><li><a href="global.html#getFollowing">getFollowing</a></li><li><a href="global.html#getPost">getPost</a></li><li><a href="global.html#getPostDetails">getPostDetails</a></li><li><a href="global.html#getReply">getReply</a></li><li><a href="global.html#getRequest">getRequest</a></li><li><a href="global.html#getTag">getTag</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#goDelete">goDelete</a></li><li><a href="global.html#goLogin">goLogin</a></li><li><a href="global.html#goSearch">goSearch</a></li><li><a href="global.html#gotoedit">gotoedit</a></li><li><a href="global.html#hitLike">hitLike</a></li><li><a href="global.html#idSearch">idSearch</a></li><li><a href="global.html#isItLiked">isItLiked</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openComment">openComment</a></li><li><a href="global.html#profileCard">profileCard</a></li><li><a href="global.html#saveLikedPost">saveLikedPost</a></li><li><a href="global.html#sendComment">sendComment</a></li><li><a href="global.html#sendPicture">sendPicture</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#submitRegistration">submitRegistration</a></li><li><a href="global.html#tagUserSearch">tagUserSearch</a></li><li><a href="global.html#tagsArray">tagsArray</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#userImage">userImage</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateLength">validateLength</a></li><li><a href="global.html#validateUrl">validateUrl</a></li><li><a href="global.html#validateUsername">validateUsername</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 03 2023 11:53:38 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: user-profile/user-info.mjs</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: user-profile/user-info.mjs</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { profileCard } from "../profile/profile-cont.mjs";
+
+const nameOfUser = document.querySelector("#nameOfUser");
+const userPic = document.querySelector(".user-profile-pic");
+
+const userInfoUrl = "https://api.noroff.dev/api/v1/social/profiles/";
+
+/**
+ * This function calls a function that send an API request and get an array of data to return and use it to display in html element.
+ * @param {String} auth This is the access token for the API request.
+ * @param {String} user  This is the name of the login user
+ */
+export function getUserInfo(auth, user) {
+  getRequest(auth, user)
+    .then((res) => {
+      // console.log(res);
+      if (res) {
+        // console.log(res);
+        if (window.location.pathname === "/profile.html") {
+          profileCard(res);
+        }
+        nameOfUser.innerHTML = `&lt;h4>${res.name}&lt;/h4>`;
+        if (res.avatar) {
+          userPic.innerHTML = `&lt;img src="${res.avatar}" alt="user profile image" />`;
+        } else {
+          userPic.innerHTML = `&lt;img src="images/profile-icon.png" alt="user profile image" />`;
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+/**
+ * This function calls an API "GET" request and returns the data responses of the request.
+ * @param {String} auth This is the access token of the request.
+ * @param {String} user This is the name of a user.
+ * @returns {Array} This returns an array of the API request.
+ */
+async function getRequest(auth, user) {
+  const response = await fetch(userInfoUrl + user, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth}`,
+    },
+  });
+  return response.json();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addPost">addPost</a></li><li><a href="global.html#callingGetPost">callingGetPost</a></li><li><a href="global.html#clickButton">clickButton</a></li><li><a href="global.html#commentModal">commentModal</a></li><li><a href="global.html#countsLike">countsLike</a></li><li><a href="global.html#deleteEditParam">deleteEditParam</a></li><li><a href="global.html#deletePost">deletePost</a></li><li><a href="global.html#displayPost">displayPost</a></li><li><a href="global.html#editPost">editPost</a></li><li><a href="global.html#followButtons">followButtons</a></li><li><a href="global.html#followUser">followUser</a></li><li><a href="global.html#following">following</a></li><li><a href="global.html#getBodyData">getBodyData</a></li><li><a href="global.html#getComments">getComments</a></li><li><a href="global.html#getContact">getContact</a></li><li><a href="global.html#getFollowing">getFollowing</a></li><li><a href="global.html#getPost">getPost</a></li><li><a href="global.html#getPostDetails">getPostDetails</a></li><li><a href="global.html#getReply">getReply</a></li><li><a href="global.html#getRequest">getRequest</a></li><li><a href="global.html#getTag">getTag</a></li><li><a href="global.html#getUserInfo">getUserInfo</a></li><li><a href="global.html#goDelete">goDelete</a></li><li><a href="global.html#goLogin">goLogin</a></li><li><a href="global.html#goSearch">goSearch</a></li><li><a href="global.html#gotoedit">gotoedit</a></li><li><a href="global.html#hitLike">hitLike</a></li><li><a href="global.html#idSearch">idSearch</a></li><li><a href="global.html#isItLiked">isItLiked</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#openComment">openComment</a></li><li><a href="global.html#profileCard">profileCard</a></li><li><a href="global.html#saveLikedPost">saveLikedPost</a></li><li><a href="global.html#sendComment">sendComment</a></li><li><a href="global.html#sendPicture">sendPicture</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#submitRegistration">submitRegistration</a></li><li><a href="global.html#tagUserSearch">tagUserSearch</a></li><li><a href="global.html#tagsArray">tagsArray</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#userImage">userImage</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateLength">validateLength</a></li><li><a href="global.html#validateUrl">validateUrl</a></li><li><a href="global.html#validateUsername">validateUsername</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Mar 03 2023 11:53:38 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,12 +1,46 @@
-const logBtn = document.querySelector("#login-button");
-const emailValue = document.querySelector("#email");
-const pwValue = document.querySelector("#password");
+import { signUp } from "./login/signup.mjs";
+import { login } from "./login/login.mjs";
 
-function login() {
-  if (emailValue.value && pwValue.value) {
-    logBtn.href = "home.html";
-  } else {
-    logBtn.href = "#";
-  }
+const logBtn = document.querySelector("#login-button");
+const gotoSignUp = document.querySelector(".gotoSignUp");
+const loginCard = document.querySelector("#login-card");
+const signUpCard = document.querySelector("#signup-card");
+const signUpBtn = document.querySelector("#signup-button");
+const showPw = document.getElementById("showPw");
+
+const noroffBaseUrl = "https://api.noroff.dev/api/v1";
+
+export const noroffToken = localStorage.getItem("nat");
+export const noroffUser = localStorage.getItem("user");
+
+if (noroffToken && noroffUser) {
+  window.location.href = `home.html`;
 }
-logBtn.addEventListener("click", login);
+
+logBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  login(noroffBaseUrl, e);
+});
+
+gotoSignUp.addEventListener("click", function (e) {
+  e.preventDefault();
+  loginCard.classList.replace("d-flex", "d-none");
+  signUpCard.classList.replace("d-none", "d-flex");
+
+  signUpBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    signUp(noroffBaseUrl, e);
+  });
+});
+
+/**
+ * This function change the type of the password input so that it can be readable.
+ * @param {Element} showPw This is a html element.
+ */
+showPw.addEventListener("click", function () {
+  if (showPw.checked) {
+    document.getElementById("password").type = "text";
+  } else {
+    document.getElementById("password").type = "password";
+  }
+});
